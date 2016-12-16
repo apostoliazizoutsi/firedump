@@ -147,22 +147,21 @@ namespace Firedump.models.dump
                 }
                 catch (Exception ex)
                 {
-                    //xtipaei mysqlException alla edo den mpenei pote
-                    Console.WriteLine("MYSQLEXCEPTION"+ex.Message);
                     if (!(ex is NullReferenceException))
                     {
                         dumpresult = new DumpResultSet();
                         dumpresult.wasSuccessful = false;
                         dumpresult.errorNumber = 2;
                         dumpresult.mysqldumpexeStandardError = "Error in MySQLDumpAdapter:\n" + ex.Message;
+
                         onCompleted(dumpresult);
+                        //xriazete to return alios girnaei onCompleted dio fores
+                        mydump = null;
+                        return;
                     }
                 }
 
-                //me mysqlexception kanonika les kai den trexei tipota sinexizei edo xoris na mpei sto catch
-                Console.WriteLine("NOTMYSQLEXCEPTION");
                 onCompleted(dumpresult);
-
                 mydump = null;
             }
             else
@@ -175,7 +174,6 @@ namespace Firedump.models.dump
                 mydump = null;
             }
             
-
         }
 
 

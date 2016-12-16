@@ -494,98 +494,120 @@ namespace Firedump.models.dump
         /// <param name="createschema"></param>
         private void handleLineOutput(string line) //ekana ta boolean global gia na min ta pernaei sinexws parametrika
         {
-
-            if(backquotes)
+            if (!String.IsNullOrEmpty(line))
             {
-                if(line.ToUpper().StartsWith("USE"))
+                if (backquotes)
                 {
-                    currentDatabase = line.Split('`', '`')[1];
-                }
-            } else
-            {
-                if(line.ToUpper().StartsWith("USE"))
-                {
-                    currentDatabase = line.Replace("USE","").Trim();
-                }
-            }
-            
-            string insertStartsWith = "";
-            if(insertReplace == 1 && ignoreInsert == true)
-            {
-                insertStartsWith = "REPLACE  IGNORE INTO";
-            } else if(insertReplace == 1)
-            {
-                insertStartsWith = "REPLACE INTO";
-            } else if(ignoreInsert)
-            {
-                insertStartsWith = "INSERT  IGNORE INTO";
-            } else
-            {
-                insertStartsWith = "INSERT INTO";
-            }
-
-            //Console.WriteLine(insertStartsWith);
-
-            if(!xmlout)
-            {
-                if (createschema)
-                {
-                    if (line.StartsWith("CREATE TABLE"))
+                    if (line.ToUpper().StartsWith("USE"))
                     {
-                        string tablename = "";
-                        if (!backquotes)
-                        {
-                            int Pos1 = line.IndexOf("TABLE") + 5;
-                            int Pos2 = line.IndexOf("(");
-                            tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
-                        }
-                        else
-                        {
-                            tablename = line.Split('`', '`')[1];
-                        }
-
-                        Console.WriteLine(tablename);
-
-                        int rowcount = getDbTableRowsCount(tablename, currentDatabase);
-                        //fire event
-                        onTableStartDump(tablename);
-                        onTableRowCount(rowcount);
-
-
+                        currentDatabase = line.Split('`', '`')[1];
                     }
-
                 }
                 else
                 {
-                    if (line.Contains(insertStartsWith))
+                    if (line.ToUpper().StartsWith("USE"))
                     {
-                        string tablename = "";
-                        if (!backquotes)
-                        {
-                            int Pos1 = line.IndexOf("INTO") + 4;
-                            int Pos2 = line.IndexOf("(");
-                            tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
-                        }
-                        else
-                        {
-                            tablename = line.Split('`', '`')[1];
-                        }
+                        currentDatabase = line.Replace("USE", "").Trim();
+                    }
+                }
 
-                        if (tablename == tempTableName)
-                        {
+                string insertStartsWith = "";
+                if (insertReplace == 1 && ignoreInsert == true)
+                {
+                    insertStartsWith = "REPLACE  IGNORE INTO";
+                }
+                else if (insertReplace == 1)
+                {
+                    insertStartsWith = "REPLACE INTO";
+                }
+                else if (ignoreInsert)
+                {
+                    insertStartsWith = "INSERT  IGNORE INTO";
+                }
+                else
+                {
+                    insertStartsWith = "INSERT INTO";
+                }
 
-                        }
-                        else
-                        {
-                            tempTableName = tablename;
+                //Console.WriteLine(insertStartsWith);
 
-                            int rowcount = getDbTableRowsCount(tablename, currentDatabase);
+                if (!xmlout)
+                {
+                    if (createschema)
+                    {
+                        if (line.StartsWith("CREATE TABLE"))
+                        {
+                            string tablename = "";
+                            if (!backquotes)
+                            {
+                                int Pos1 = line.IndexOf("TABLE") + 5;
+                                int Pos2 = line.IndexOf("(");
+                                tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                            }
+                            else
+                            {
+                                tablename = line.Split('`', '`')[1];
+                            }
+
+                            Console.WriteLine(tablename);
+
+                            int rowcount = 1;
+                            try
+                            {
+                                rowcount = getDbTableRowsCount(tablename, currentDatabase);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("MysqlDump.cs:"+ex.Message);
+                            }
                             Console.WriteLine(tablename);
                             //fire event
                             onTableStartDump(tablename);
-                            onTableRowCount(rowcount);                            
+                            onTableRowCount(rowcount);
+
                         }
 
+                    }
+                    else
+                    {
+                        if (line.Contains(insertStartsWith))
+                        {
+                            string tablename = "";
+                            if (!backquotes)
+                            {
+                                int Pos1 = line.IndexOf("INTO") + 4;
+                                int Pos2 = line.IndexOf("(");
+                                tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                            }
+                            else
+                            {
+                                tablename = line.Split('`', '`')[1];
+                            }
+
+                            if (tablename == tempTableName)
+                            {
+
+                            }
+                            else
+                            {
+                                tempTableName = tablename;
+
+                                int rowcount = 1;
+                                try
+                                {
+                                    rowcount = getDbTableRowsCount(tablename, currentDatabase);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine("MysqlDump.cs:" + ex.Message);
+                                }
+                                Console.WriteLine(tablename);
+                                //fire event
+                                onTableStartDump(tablename);
+                                onTableRowCount(rowcount);
+                            }
+
+                        }
                     }
                 }
             }
