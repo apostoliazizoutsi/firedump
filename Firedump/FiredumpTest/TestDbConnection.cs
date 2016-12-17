@@ -30,6 +30,7 @@ namespace FiredumpTest
         [ClassCleanup()]
         public static void clearDb()
         {
+            Assert.AreEqual(1,2);
             using (MySqlConnection con = new MySqlConnection(DbConnection.conStringBuilder(Const.host, Const.username, Const.password, null)))
             {
                 con.Open();
