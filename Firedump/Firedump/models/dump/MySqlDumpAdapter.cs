@@ -153,11 +153,6 @@ namespace Firedump.models.dump
                         dumpresult.wasSuccessful = false;
                         dumpresult.errorNumber = 2;
                         dumpresult.mysqldumpexeStandardError = "Error in MySQLDumpAdapter:\n" + ex.Message;
-
-                        onCompleted(dumpresult);
-                        //xriazete to return alios girnaei onCompleted dio fores
-                        mydump = null;
-                        return;
                     }
                 }
 
