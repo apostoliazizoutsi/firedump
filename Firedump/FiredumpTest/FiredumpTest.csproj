@@ -117,10 +117,12 @@
     <Compile Include="TestMysqlDumpAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
+	<!--
     <ProjectReference Include="..\Firedump\Firedump.csproj">
       <Project>{ffef1c2e-e951-4270-afbb-807ca84bb79b}</Project>
       <Name>Firedump</Name>
     </ProjectReference>
+	-->
 	<Reference Include="Firedump, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\jenkins\firedumpjob\Firedump\Firedump\bin\Debug\Firedump.exe</HintPath>
       <Private>False</Private>
