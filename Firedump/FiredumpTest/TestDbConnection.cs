@@ -71,8 +71,8 @@ namespace FiredumpTest
             Assert.IsTrue(connection.testConnection().wasSuccessful);
 
             connection.Host = Const.host;
-            connection.username = "invaliduser";
-            connection.password = "passwd";
+            connection.username = Const.username;
+            connection.password = password;
 
             Assert.IsFalse(connection.testConnection().wasSuccessful);
             
