@@ -36,11 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Firedump">
-      <HintPath>C:\jenkins\firedumpjob\Firedump\Firedump\bin\Debug\Firedump.exe</HintPath>
-      <Private>False</Private>
-    </Reference>
+  <ItemGroup>  
     <Reference Include="Microsoft.VisualStudio.TestTools.UnitTesting">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
       <Private>True</Private>
@@ -125,6 +121,10 @@
       <Project>{ffef1c2e-e951-4270-afbb-807ca84bb79b}</Project>
       <Name>Firedump</Name>
     </ProjectReference>
+	<Reference Include="Firedump, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>C:\jenkins\firedumpjob\Firedump\Firedump\bin\Debug\Firedump.exe</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
