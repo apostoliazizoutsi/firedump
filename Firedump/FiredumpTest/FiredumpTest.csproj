@@ -118,16 +118,16 @@
     <Compile Include="TestOS.cs" />
   </ItemGroup>
   <ItemGroup>
-    <!--
     <ProjectReference Include="..\Firedump\Firedump.csproj">
       <Project>{ffef1c2e-e951-4270-afbb-807ca84bb79b}</Project>
       <Name>Firedump</Name>
     </ProjectReference>
-	-->
-    <Reference Include="Firedump, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>C:\Users\abraham\Source\Repos\firedump\Firedump\Firedump\bin\Debug\Firedump.exe</HintPath>
-      <Private>True</Private>
+    <!--
+	<Reference Include="Firedump, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>C:\Users\abraham\Source\Repos\firedump\Firedump\Firedump\bin\Debug</HintPath>
+      <Private>False</Private>
     </Reference>
+	-->
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
