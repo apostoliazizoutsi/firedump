@@ -18,10 +18,6 @@ Avraam Piperidis<br>
 Valantis Pitsas<br>
 Chenyang Ji <br>
 <br>
-
-mysqlftp backup .net desktop app <br>
-####Usefull links/libs for  project
-http://mysqlbackupnet.codeplex.com/ <br>
 <br>
 some early pics.<br>
 <img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic1.PNG?raw=true" width="450" />
