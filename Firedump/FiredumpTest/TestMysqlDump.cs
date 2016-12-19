@@ -10,6 +10,7 @@ using Firedump.models.databaseUtils;
 using log4net;
 using log4net.Config;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace FiredumpTest
 {
@@ -91,7 +92,7 @@ namespace FiredumpTest
         /// testing with default compression and adapters event calls and includeCreateSchema to False
         /// </summary>
         [TestMethod]
-         public async Task TestExecuteDumpPhaseTwo()
+         public void TestExecuteDumpPhaseTwo()
         {
             DumpCredentialsConfig creconfig = new DumpCredentialsConfig();
             creconfig.host = Const.host;
@@ -119,9 +120,22 @@ namespace FiredumpTest
             mysqldump.CompressStart += onCompressStart;
             mysqldump.TableRowCount += tableRowCount;
             mysqldump.TableStartDump += onTableStartDump;
-            Task<DumpResultSet> res = execdump(mysqldump);
-            DumpResultSet dumpresult = await res;
 
+            /*
+             = null;
+            ManualResetEvent done = new ManualResetEvent(false);
+            Thread thread = new Thread(delegate ()
+            {
+                dumpresult = mysqldump.executeDump();
+                done.Set();
+            });
+            thread.Start();
+            done.WaitOne();
+            //Task<DumpResultSet> res = execdump(mysqldump);
+            */
+            DumpResultSet dumpresult = mysqldump.executeDump();
+            Thread.Sleep(4500);
+            
             Assert.IsTrue(dumpresult.wasSuccessful);
             Assert.IsTrue(File.Exists(dumpresult.fileAbsPath));
             File.Delete(dumpresult.fileAbsPath);
