@@ -64,6 +64,7 @@ namespace FiredumpTest
             ConfigurationManager.getInstance().initializeConfig();
 
             MysqlDump mysqldump = new MysqlDump();
+            mysqldump.IsTest = true;
             DumpCredentialsConfig creconfig = new DumpCredentialsConfig();
             creconfig.host = Const.host;
             creconfig.port = 3306;
@@ -109,7 +110,8 @@ namespace FiredumpTest
             List<string> tables = connection.getTables(Const.database);
             int actualNumOfTables = tables.Count;
 
-            MysqlDump mysqldump = new MysqlDump();          
+            MysqlDump mysqldump = new MysqlDump();
+            mysqldump.IsTest = true;   
             mysqldump.credentialsConfigInstance = creconfig;
             
             mysqldump.CompressProgress += compressProgress;

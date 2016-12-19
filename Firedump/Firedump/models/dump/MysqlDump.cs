@@ -453,6 +453,12 @@ namespace Firedump.models.dump
                 if (configurationManagerInstance.compressConfigInstance.enableCompression)
                 {
                     comp = new Compression();
+                    if (IsTest)
+                    {
+                        if (OS.IsWindowsServer())
+                            comp.IsTest = true;
+                    }
+
                     comp.absolutePath = resultObj.fileAbsPath;
                     comp.CompressProgress += onCompressProgressHandler;
                     comp.CompressStart += onCompressStartHandler;

@@ -156,6 +156,7 @@ namespace FiredumpTest
             public void startDump(DumpCredentialsConfig credentialsConfigInstance)
             {
                 MysqlDump mysqldump = new MysqlDump();
+                mysqldump.IsTest = true;
                 mysqldump.credentialsConfigInstance = credentialsConfigInstance;
                 DumpResultSet dumpresult = mysqldump.executeDump();
             }
