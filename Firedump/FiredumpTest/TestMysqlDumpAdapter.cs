@@ -20,7 +20,7 @@ namespace FiredumpTest
         [ClassInitialize()]
         public static void initDb(TestContext context)
         {
-            TestDbConnection.populateDb(25);
+            TestDbConnection.populateDb(40);
             ConfigurationManager.getInstance().initializeConfig();
         }
 
@@ -33,13 +33,13 @@ namespace FiredumpTest
         {
             TestDbConnection.clearDb();
         }
-        
+
 
 
         [TestMethod]
-        public void TestFormDumpEventCallbacks()
+        public  void TestFormDumpEventCallbacks()
         {
-            
+
             MockFormProgressListener form = new MockFormProgressListener();
             MockAdapterListener adapter = new MockAdapterListener();
 
@@ -57,7 +57,7 @@ namespace FiredumpTest
             config.password = Const.password;
             config.database = Const.database;
 
-            adapter.startDump(config);
+             adapter.startDump(config);
 
         }
 
@@ -153,12 +153,12 @@ namespace FiredumpTest
                 Assert.AreEqual(0, tables.Count);
             }
 
-            public void startDump(DumpCredentialsConfig credentialsConfigInstance)
+            public  void startDump(DumpCredentialsConfig credentialsConfigInstance)
             {
                 MysqlDump mysqldump = new MysqlDump();
                 mysqldump.IsTest = true;
                 mysqldump.credentialsConfigInstance = credentialsConfigInstance;
-                DumpResultSet dumpresult = mysqldump.executeDump();
+                DumpResultSet dumpresult =  mysqldump.executeDump();
             }
 
             public void tableRowCount(int rowcount)

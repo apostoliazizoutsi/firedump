@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Firedump.models.databaseUtils;
 using log4net;
 using log4net.Config;
+using System.Threading.Tasks;
 
 namespace FiredumpTest
 {
@@ -27,7 +28,7 @@ namespace FiredumpTest
             //it will be deleted as the whle database at the end of the run
             //calling clearDb()
             BasicConfigurator.Configure();
-            TestDbConnection.populateDb(25);
+            TestDbConnection.populateDb(40);
         }
 
 
@@ -90,7 +91,7 @@ namespace FiredumpTest
         /// testing with default compression and adapters event calls and includeCreateSchema to False
         /// </summary>
         [TestMethod]
-        public void TestExecuteDumpPhaseTwo()
+        public async void TestExecuteDumpPhaseTwo()
         {
             DumpCredentialsConfig creconfig = new DumpCredentialsConfig();
             creconfig.host = Const.host;
@@ -111,14 +112,15 @@ namespace FiredumpTest
             int actualNumOfTables = tables.Count;
 
             MysqlDump mysqldump = new MysqlDump();
-            mysqldump.IsTest = true;   
+            mysqldump.IsTest = true;
             mysqldump.credentialsConfigInstance = creconfig;
-            
+
             mysqldump.CompressProgress += compressProgress;
             mysqldump.CompressStart += onCompressStart;
             mysqldump.TableRowCount += tableRowCount;
             mysqldump.TableStartDump += onTableStartDump;
-            DumpResultSet dumpresult = mysqldump.executeDump();
+            Task<DumpResultSet> res = execdump(mysqldump);
+            DumpResultSet dumpresult = await res;
 
             Assert.IsTrue(dumpresult.wasSuccessful);
             Assert.IsTrue(File.Exists(dumpresult.fileAbsPath));
@@ -127,6 +129,10 @@ namespace FiredumpTest
             validateOnTableStartDump(actualNumOfTables);
         }
 
+        public async Task<DumpResultSet>  execdump(MysqlDump mysqldump)
+        {
+            return mysqldump.executeDump();
+        }
 
         public int NumOfTables { get; set; }
 
