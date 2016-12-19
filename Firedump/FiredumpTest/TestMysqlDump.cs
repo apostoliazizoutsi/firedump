@@ -91,7 +91,7 @@ namespace FiredumpTest
         /// testing with default compression and adapters event calls and includeCreateSchema to False
         /// </summary>
         [TestMethod]
-        public async void TestExecuteDumpPhaseTwo()
+         public async Task TestExecuteDumpPhaseTwo()
         {
             DumpCredentialsConfig creconfig = new DumpCredentialsConfig();
             creconfig.host = Const.host;
