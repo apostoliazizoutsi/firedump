@@ -321,6 +321,7 @@
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="models\databaseUtils\SqlUtils.cs" />
+    <Compile Include="utils\OS.cs" />
     <Compile Include="utils\StringUtils.cs" />
     <EmbeddedResource Include="Forms\location\FileSystem.resx">
       <DependentUpon>FileSystem.cs</DependentUpon>

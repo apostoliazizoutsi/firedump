@@ -20,7 +20,7 @@ namespace FiredumpTest
         [ClassInitialize()]
         public static void initDb(TestContext context)
         {
-            TestDbConnection.populateDb(150);
+            TestDbConnection.populateDb(25);
             ConfigurationManager.getInstance().initializeConfig();
         }
 

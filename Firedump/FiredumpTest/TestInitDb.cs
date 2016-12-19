@@ -9,12 +9,13 @@ namespace FiredumpTest
     {
 
         /// <summary>
-        /// output firedumpdb.db is on FiredumpTest\bin\Debug\resources\db\firedumpdb.db
+        /// 
         /// </summary>
         [TestMethod]
         public void TestCreateDb()
         {
             
+            /*
             InitDb.createDbTables();
             Assert.IsTrue(InitDb.isTableExists("userinfo"));
             Assert.IsTrue(InitDb.isTableExists("backup_locations"));
@@ -24,6 +25,7 @@ namespace FiredumpTest
             Assert.IsTrue(InitDb.isTableExists("schedules"));
 
             Assert.IsFalse(InitDb.isTableExists("nonexistanceTable"));
+            */
         }
 
 

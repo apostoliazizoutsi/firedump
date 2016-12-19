@@ -10,12 +10,15 @@ using Firedump.models.dump;
 using System.IO;
 using System.Text.RegularExpressions;
 using Firedump.models.databaseUtils;
+using Firedump.utils;
 
 namespace Firedump.models.dump
 {
     public class MysqlDump
     {
         //<events>
+        private static readonly string BUILD_SERVER_MYSQLDUMP_PATH = "C:\\jenkins\\resources\\mysqldump.exe";
+        public bool IsTest { get; set; }
 
         //onTableStartDump
         public delegate void tableStartDump(string table);
@@ -345,11 +348,20 @@ namespace Firedump.models.dump
             //dump execution
             Console.WriteLine(arguments.ToString());
 
+            string mysqldumpfile = "resources\\mysqldump\\mysqldump.exe";
+            //now we can run test localy and on server
+            //localy visual studio test suite will handle process mapping
+            if (IsTest)
+            {
+                if(OS.IsWindowsServer())
+                    mysqldumpfile = BUILD_SERVER_MYSQLDUMP_PATH;
+            }
+                
             proc = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "resources\\mysqldump\\mysqldump.exe",//AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\", "mysqldump.exe") ,
+                    FileName = mysqldumpfile,//AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\", "mysqldump.exe") ,
                     Arguments = arguments.ToString(),
                     UseShellExecute = false,
                     RedirectStandardOutput = true, //prepei na diavastoun me ti seira pou ginonte ta redirect alliws kolaei se endless loop
@@ -357,7 +369,8 @@ namespace Firedump.models.dump
                     CreateNoWindow = true
                 }
             };
-            Console.WriteLine("MySqlDump: Dump starting now");
+         
+            Console.WriteLine("MySqlDump: Dump starting now");      
             proc.Start();
 
             Random rnd = new Random();
@@ -558,7 +571,6 @@ namespace Firedump.models.dump
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine("MysqlDump.cs:"+ex.Message);
                             }
                             Console.WriteLine(tablename);
                             //fire event
@@ -599,7 +611,6 @@ namespace Firedump.models.dump
                                 }
                                 catch (Exception ex)
                                 {
-                                    Console.WriteLine("MysqlDump.cs:" + ex.Message);
                                 }
                                 Console.WriteLine(tablename);
                                 //fire event

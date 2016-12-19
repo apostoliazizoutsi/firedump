@@ -33,10 +33,16 @@ namespace FiredumpTest
             using (MySqlConnection con = new MySqlConnection(DbConnection.conStringBuilder(Const.host, Const.username, Const.password, null)))
             {
                 con.Open();
-                string sql = "DROP DATABASE testfiredump;";
+                string sql = "DROP DATABASE IF EXISTS testfiredump;";
                 using (MySqlCommand command = new MySqlCommand(sql,con))
                 {
-                    command.ExecuteNonQuery();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch(MySqlException ex) { 
+                    }
+                    
                 }
             }
         }
@@ -71,7 +77,7 @@ namespace FiredumpTest
             Assert.IsTrue(connection.testConnection().wasSuccessful);
 
             connection.Host = Const.host;
-            connection.username = Const.username;
+            connection.username = "invalidusername";
             connection.password = password;
 
             Assert.IsFalse(connection.testConnection().wasSuccessful);

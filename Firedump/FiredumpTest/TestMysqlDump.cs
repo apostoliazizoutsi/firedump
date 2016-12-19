@@ -27,7 +27,7 @@ namespace FiredumpTest
             //it will be deleted as the whle database at the end of the run
             //calling clearDb()
             BasicConfigurator.Configure();
-            TestDbConnection.populateDb(150);
+            TestDbConnection.populateDb(25);
         }
 
 

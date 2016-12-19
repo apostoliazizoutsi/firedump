@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using Firedump.utils;
 
 namespace Firedump.db
 {
@@ -11,12 +12,16 @@ namespace Firedump.db
     /// initialization database sqlite firedump.db script,
     /// so this is utility only first run script.
     /// 
-    /// Im going to test the shit out of this
+    /// 
     /// </summary>
     public class InitDb
     {
-        private static readonly string conn = ".//resources//db//firedumpdb.db";
+        private static readonly string BUILD_SERVER_SQLITEDB = "C://jenkins//resources//firedumpdb.db";
+        private static readonly string BUILD_SERVER_DATASOURCE = "Data Source=C://jenkins//resources//firedumpdb.db";
+
+        private static string conn = ".//resources//db//firedumpdb.db";
         private static readonly int dbVersion = 1;
+        public static bool IsTest { get; set; }
 
         public InitDb() { }
 
@@ -66,10 +71,20 @@ namespace Firedump.db
 
         public static void createDbTables()
         {
-           if(!System.IO.File.Exists(conn))
+            string datasource = "Data Source=.//resources//firedumpdb.db";
+            if (IsTest)
+            {
+                if (OS.IsWindowsServer())
+                {
+                    conn = BUILD_SERVER_SQLITEDB;
+                    datasource = BUILD_SERVER_DATASOURCE;
+                }
+            }
+            
+            if (!System.IO.File.Exists(conn))
             {
                 SQLiteConnection.CreateFile(conn);
-                using (SQLiteConnection con = new SQLiteConnection("Data Source=.//resources//db//firedumpdb.db"))
+                using (SQLiteConnection con = new SQLiteConnection(datasource))
                 {
                     con.Open();              
                     foreach(KeyValuePair<string,string> entry in tables)
@@ -89,13 +104,23 @@ namespace Firedump.db
 
         public static bool isTableExists(string table)
         {
+            string datasource = "Data Source=.//resources//firedumpdb.db";
+            if (IsTest)
+            {
+                if (OS.IsWindowsServer())
+                {
+                    conn = BUILD_SERVER_SQLITEDB;
+                    datasource = BUILD_SERVER_DATASOURCE;
+                }
+            }
+
             string count = "0";
             if(table == null)
             {
                 return false;
             }
 
-            using (SQLiteConnection con = new SQLiteConnection("Data Source=.//resources//db//firedumpdb.db"))
+            using (SQLiteConnection con = new SQLiteConnection(datasource))
             {
                 con.Open();
                 string sql = string.Format("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = '{0}'",table);
