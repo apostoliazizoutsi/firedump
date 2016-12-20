@@ -1,4 +1,4 @@
---->mysql to xml<---
+>mysql to xml<---
 For a single table
 mysql --xml -u username -p database_name table_name > table_name.xml
 
