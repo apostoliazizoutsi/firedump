@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
 using Topshelf;
+using Firedump.models.dump;
+using Firedump.models.location;
 
 namespace Firedump.service
 {
@@ -82,11 +84,17 @@ namespace Firedump.service
                         schedulemanager.setSchedule(scheduleRowList[0]);
 
                         //Set event delegate callback
-                        schedulemanager.ScheduleResult += scheduleResult;
+                        //schedulemanager.ScheduleResult += scheduleResult;
 
                         //Start the schedule
-                        schedulemanager.Start();
+                        //DumpResultSet result = schedulemanager.StartDump();
                         //needs to wait
+                        //check result
+
+                        //check internet connection
+                        //build List<int>locations
+                        //List<LocationResultSet> listRes = schedulemanager.StartSaveLocations(null,result.fileAbsPath);
+                        //check listres
                     }
                     
                 }

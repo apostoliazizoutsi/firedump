@@ -1,4 +1,5 @@
-﻿using Firedump.models.dump;
+﻿using Firedump.models.configuration.dynamicconfig;
+using Firedump.models.dump;
 using Firedump.models.location;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,12 @@ namespace Firedump.service
 
         private MySqlDumpAdapter mysqldumpAdapter;
         private LocationAdapterManager locationAdapterManager;
+        private DumpResultSet result;
+        private firedumpdbDataSet.schedulesRow schedulesRow;
 
 
         public ScheduleManager()
         {
-            mysqldumpAdapter = new MySqlDumpAdapter();
         }
 
         internal void StopCurrentJob()
@@ -30,12 +32,25 @@ namespace Firedump.service
 
         internal void setSchedule(firedumpdbDataSet.schedulesRow schedulesRow)
         {
-            
+            this.schedulesRow = schedulesRow;
         }
 
-        internal void Start()
+        internal DumpResultSet StartDump()
         {
-            
+            //mysqldumpAdapter = new MySqlDumpAdapter();
+            //DumpCredentialsConfig config = new DumpCredentialsConfig();
+            //set config info
+            //return mysqldumpAdapter.startDumpSync(config);
+            return null;
         }
+
+        internal List<LocationResultSet>  StartSaveLocations(List<int> locations, string sourcePath)
+        {
+            //locationAdapterManager = new LocationAdapterManager(locations, sourcePath);
+            //locationAdapterManager.startSave();
+
+            return null;
+        }
+
     }
 }

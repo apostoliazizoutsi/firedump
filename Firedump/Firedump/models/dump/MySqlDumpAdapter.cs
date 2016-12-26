@@ -110,10 +110,41 @@ namespace Firedump.models.dump
             this.credentialsConfigInstance = credentialsConfigInstance;
 
             Task mysqldumpTask = new Task(DumpMysqlTaskExecutor);
-            mysqldumpTask.Start();         
+            mysqldumpTask.Start();
+            
+        }
+
+
+
+        /// <summary>
+        /// Sync dump for the service
+        /// </summary>
+        /// <param name="credentialsConfigInstance"></param>
+        public DumpResultSet startDumpSync(DumpCredentialsConfig credentialsConfigInstance)
+        {
+            this.credentialsConfigInstance = credentialsConfigInstance;
+            mydump = new MysqlDump();
+            mydump.credentialsConfigInstance = credentialsConfigInstance;
+            DumpResultSet result = null;
+            try {
+                result = mydump.executeDump();
+            }catch(Exception ex)
+            {
+                if (!(ex is NullReferenceException))
+                {
+                    result = new DumpResultSet();
+                    result.wasSuccessful = false;
+                    result.errorNumber = 2;
+                    result.mysqldumpexeStandardError = "Error in MySQLDumpAdapter:\n" + ex.Message;
+                }
+            }
+
+            mydump = null;
+            return result;
         }
         
 
+       
         /// <summary>
         /// main mysql dump executor task
         /// start/running in ASYNC mode.
