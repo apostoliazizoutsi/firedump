@@ -18,6 +18,7 @@ using Firedump.Forms.mysql;
 using Firedump.Forms.location;
 using Firedump.models.location;
 using Firedump.Forms.sqlimport;
+using Firedump.Forms.schedule;
 
 namespace Firedump
 {
@@ -1022,6 +1023,10 @@ namespace Firedump
             }
         }
 
-       
+        private void schedulerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SchedulerForm schedulerForm = new SchedulerForm();
+            schedulerForm.Show();
+        }
     }
 }

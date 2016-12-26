@@ -304,13 +304,13 @@ namespace Firedump.models.dump
                     UseShellExecute = false,
                     RedirectStandardOutput = true, //prepei na diavastoun me ti seira pou ginonte ta redirect alliws kolaei se endless loop
                     RedirectStandardError = true,
-                    CreateNoWindow = true
+                    CreateNoWindow = true,
                 }
             };
-
             Console.WriteLine("Executing 7zip now.");
             CompressionResultSet result = new CompressionResultSet();
             proc.Start();
+            
 
             onCompressStart();
 

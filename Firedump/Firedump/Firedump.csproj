@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FFEF1C2E-E951-4270-AFBB-807CA84BB79B}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Firedump</RootNamespace>
     <AssemblyName>Firedump</AssemblyName>
@@ -33,6 +33,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Effort, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
@@ -79,6 +82,8 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.103\lib\net46\System.Data.SQLite.dll</HintPath>
@@ -92,9 +97,12 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.103\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -105,6 +113,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Topshelf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Topshelf.4.0.3\lib\net452\Topshelf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
@@ -117,6 +129,7 @@
     <Compile Include="backup_locations.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Consts.cs" />
     <Compile Include="firedumpdbDataSet.cs">
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
     </Compile>
@@ -151,6 +164,12 @@
     <Compile Include="Forms\mysql\sqlviewer\IntelliSense.Designer.cs">
       <DependentUpon>IntelliSense.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\schedule\SchedulerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\schedule\SchedulerForm.Designer.cs">
+      <DependentUpon>SchedulerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +188,7 @@
     <Compile Include="models\configuration\dynamicconfig\ImportCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
     <Compile Include="models\dump\CompressionAdapter.cs" />
+    <Compile Include="models\pojos\ServiceStatus.cs" />
     <Compile Include="models\sqlimport\ImportAdapter.cs" />
     <Compile Include="models\sqlimport\ImportAdapterManager.cs" />
     <Compile Include="models\sqlimport\ImportResultSet.cs" />
@@ -301,6 +321,8 @@
     <Compile Include="Forms\mysql\status\AnalyzeDbForm.Designer.cs">
       <DependentUpon>AnalyzeDbForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="service\FiredumpService.cs" />
+    <Compile Include="service\ScheduleManager.cs" />
     <Compile Include="Test1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -316,6 +338,12 @@
     </Compile>
     <Compile Include="usercontrols\CredentialsUserControl.Designer.cs">
       <DependentUpon>CredentialsUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="usercontrols\ServiceManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usercontrols\ServiceManager.Designer.cs">
+      <DependentUpon>ServiceManager.cs</DependentUpon>
     </Compile>
     <Compile Include="userinfo.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
@@ -349,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\mysql\sqlviewer\IntelliSense.resx">
       <DependentUpon>IntelliSense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\schedule\SchedulerForm.resx">
+      <DependentUpon>SchedulerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
@@ -389,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="usercontrols\CredentialsUserControl.resx">
       <DependentUpon>CredentialsUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usercontrols\ServiceManager.resx">
+      <DependentUpon>ServiceManager.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="firedumpdbDataSet.xsc">
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
@@ -447,6 +481,18 @@
     </Compile>
     <None Include="resources\mysqldump\charsets\README">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="serviceinstall.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="servicestart.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="servicestop.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="serviceuninstall.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -514,6 +560,12 @@
     </Content>
     <Content Include="resources\icons\googledriveicon.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\icons\greencircle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\icons\redcircle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\icons\tableimage.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -609,9 +661,7 @@
     </Content>
     <None Include="resources\sqlselecticon.png.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="models\pojos\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CaretPosition\CaretPosition\CaretPosition.csproj">
       <Project>{1bcb161e-feb5-4cf2-b925-076d94427827}</Project>

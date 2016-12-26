@@ -61,6 +61,7 @@
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cancel = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.schedulerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -218,7 +219,8 @@
             this.fileToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.toolsToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.schedulerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(662, 24);
@@ -368,6 +370,13 @@
             this.cancel.Name = "cancel";
             this.cancel.Text = "cancel";
             // 
+            // schedulerToolStripMenuItem
+            // 
+            this.schedulerToolStripMenuItem.Name = "schedulerToolStripMenuItem";
+            this.schedulerToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.schedulerToolStripMenuItem.Text = "Scheduler";
+            this.schedulerToolStripMenuItem.Click += new System.EventHandler(this.schedulerToolStripMenuItem_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -434,5 +443,6 @@
         private System.Windows.Forms.ListView lbSaveLocations;
         private System.Windows.Forms.ColumnHeader nameCol;
         private System.Windows.Forms.ColumnHeader pathCol;
+        private System.Windows.Forms.ToolStripMenuItem schedulerToolStripMenuItem;
     }
 }

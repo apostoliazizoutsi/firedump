@@ -120,21 +120,8 @@ namespace FiredumpTest
             mysqldump.CompressStart += onCompressStart;
             mysqldump.TableRowCount += tableRowCount;
             mysqldump.TableStartDump += onTableStartDump;
-
-            /*
-             = null;
-            ManualResetEvent done = new ManualResetEvent(false);
-            Thread thread = new Thread(delegate ()
-            {
-                dumpresult = mysqldump.executeDump();
-                done.Set();
-            });
-            thread.Start();
-            done.WaitOne();
-            //Task<DumpResultSet> res = execdump(mysqldump);
-            */
+          
             DumpResultSet dumpresult = mysqldump.executeDump();
-            Thread.Sleep(4500);
             
             Assert.IsTrue(dumpresult.wasSuccessful);
             Assert.IsTrue(File.Exists(dumpresult.fileAbsPath));
