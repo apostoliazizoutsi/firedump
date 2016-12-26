@@ -1,4 +1,4 @@
 cd %~dp0
-START firedump.exe start
+CALL firedump.exe start
 ECHO Starting firedump Service
 TIMEOUT /T 2

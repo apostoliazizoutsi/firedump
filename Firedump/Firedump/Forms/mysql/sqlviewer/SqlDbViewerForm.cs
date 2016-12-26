@@ -192,11 +192,12 @@ namespace Firedump.Forms.mysql.sqlviewer
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
+                    
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(sql, connection))
                     {
                         try
                         {
-                            DataSet dataset = new DataSet();
+                            DataSet dataset = new DataSet();                           
                             BindingSource bs = new BindingSource();
                             adapter.Fill(dataset);
                             bs.DataSource = dataset.Tables[0].DefaultView;

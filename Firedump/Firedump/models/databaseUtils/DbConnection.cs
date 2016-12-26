@@ -77,7 +77,7 @@ namespace Firedump.models.databaseUtils
 
             string cons = "";
             if (!String.IsNullOrEmpty(database))
-            {
+            {//@";Convert Zero Datetime=true;"
                 cons = string.Format("Server=" + host + ";database={0};UID=" + username + ";password=" + password, database);
             }
             else
