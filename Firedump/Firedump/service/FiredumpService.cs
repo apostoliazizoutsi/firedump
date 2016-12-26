@@ -19,6 +19,7 @@ namespace Firedump.service
         private firedumpdbDataSet.schedulesDataTable schedules;
         private firedumpdbDataSetTableAdapters.schedulesTableAdapter schedulesAdapter;
         private ScheduleManager schedulemanager;
+        private List<firedumpdbDataSet.schedulesRow> scheduleRowList;
         
         public FiredumpService()
         {
@@ -38,48 +39,74 @@ namespace Firedump.service
 
 
         private void Run()
-        {           
+        {
+            //on comment i have no schedule so some kind of null exception raised and the service broke
+            //CANT DEBUG/WRITELINE/LOG ON CONSOLE.WRITELINE a service!
+            try
+            {
+                
+                schedules = new firedumpdbDataSet.schedulesDataTable();
+                schedulesAdapter = new firedumpdbDataSetTableAdapters.schedulesTableAdapter();
+                schedulesAdapter.Fill(schedules);
+
+                scheduleRowList = new List<firedumpdbDataSet.schedulesRow>();
+                //copy schedules to List<>scheduleRowList
+                foreach (firedumpdbDataSet.schedulesRow row in schedules)
+                {
+                    scheduleRowList.Add(row);
+                }
+            }catch(Exception ex)
+            {
+                File.AppendAllText(@"errorlog.txt",ex.ToString());
+            }
+
+            //Sort scheduleRowList by date and take the nearest upcomming
+            //malon panw anti gia Fill ena FillByDate query pou tha ta fernei etima me date order
+
             while (run)
             {
                 Thread.Sleep(MILLISECS);
                 try
-                {
-                    
-                    /*on comment i have no schedule so some kind of null exception raised and the service broke
-                    //CANT DEBUG/WRITELINE/LOG ON CONSOLE.WRITELINE a service!
-
-                    schedulemanager = new ScheduleManager();
-                    schedules = new firedumpdbDataSet.schedulesDataTable();
-                    schedulesAdapter = new firedumpdbDataSetTableAdapters.schedulesTableAdapter();
-                    schedulesAdapter.Fill(schedules);
-
-                    //Sort schedules by date and take the nearest upcomming
-
+                {                                    
                     //Set up the current day/hour
                     int day = (int)DateTime.Now.DayOfWeek;
                     int hours = DateTime.Now.Hour;
                     int minute = DateTime.Now.Minute;
 
-                    //Check if schedule[0]date is near now with gap +-MILLISECS+1sec safety
-                    //If it is continue
+                    //Check if scheduleRowList[0]date is near now with gap +-MILLISECS+5sec safety
+                    //If it is and scheduleRowlist.Count > 0 continue
                     //Set the nearest in time schedule
-                    schedulemanager.setSchedule(schedules[0]);
+                    if(scheduleRowList.Count > 0)
+                    {
+                        schedulemanager = new ScheduleManager();
+                        schedulemanager.setSchedule(scheduleRowList[0]);
 
-                    //Set event delegate callback
-                    schedulemanager.ScheduleResult += scheduleResult;
+                        //Set event delegate callback
+                        schedulemanager.ScheduleResult += scheduleResult;
 
-                    //Start the schedule
-                    schedulemanager.Start();
-                    */
+                        //Start the schedule
+                        schedulemanager.Start();
+                        //needs to wait
+                    }
+                    
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) {
+                    //write ex message to file
+                    File.AppendAllText(@"errorlog.txt",ex.ToString());
+                }
             }
         }
 
 
         private void scheduleResult(object ob)
         {
-            //if success remove schedule from database
+            //if success remove schedule from scheduleRowList
+            /*
+            if (scheduleRowList.Count > 0)
+            {
+                scheduleRowList.Remove(row);
+            }
+            */
         }
 
 

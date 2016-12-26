@@ -61,7 +61,7 @@ namespace Firedump.models.databaseUtils
             {
                 connectionString += ";database=" + database;
             }
-            return connectionString;
+            return connectionString + @";Convert Zero Datetime=true;" + @"default command timeout=120;";
         }
 
         /// <summary>
@@ -77,12 +77,35 @@ namespace Firedump.models.databaseUtils
 
             string cons = "";
             if (!String.IsNullOrEmpty(database))
-            {//@";Convert Zero Datetime=true;"
-                cons = string.Format("Server=" + host + ";database={0};UID=" + username + ";password=" + password, database);
+            {
+                cons = string.Format("Server=" + host + ";database={0};UID=" + username + ";password=" + password, database+ @";Convert Zero Datetime=true;" + @"default command timeout=120;");
             }
             else
             {
-                cons = "Server=" + host + ";UID=" + username + ";password=" + password;
+                cons = "Server=" + host + ";UID=" + username + ";password=" + password + @";Convert Zero Datetime=true;" + @"default command timeout=120;";
+            }
+            return cons;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="database"></param>
+        /// <returns></returns>
+        public static string conStringBuilder(string host, string username, string password, string database,int port)
+        {
+
+            string cons = "";
+            if (!String.IsNullOrEmpty(database))
+            {
+                cons = string.Format("Server=" + host + ";database={0};UID=" + username + ";password=" + password + ";port=" + port, database + @";Convert Zero Datetime=true;"+ @"default command timeout=120;");
+            }
+            else
+            {
+                cons = "Server=" + host + ";UID=" + username + ";password=" + password + ";port=" + port + @";Convert Zero Datetime=true;" + @"default command timeout=120;";
             }
             return cons;
         }

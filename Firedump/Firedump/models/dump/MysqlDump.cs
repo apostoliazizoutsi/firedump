@@ -630,26 +630,16 @@ namespace Firedump.models.dump
             }
             
         }
-
-
-        private int getTableRowsCount(string tableName)
-        {
-            string host = credentialsConfigInstance.host;
-            string database = credentialsConfigInstance.database;
-            string password = credentialsConfigInstance.password;
-            string username = credentialsConfigInstance.username;
-
-            string constring = DbConnection.conStringBuilder(host,username,password,database);
-            return DbConnection.Instance().getTableRowsCount(tableName,constring);
-        }
+        
 
         private int getDbTableRowsCount(string tableName,string dbname)
         {
             string host = credentialsConfigInstance.host;
             string password = credentialsConfigInstance.password;
             string username = credentialsConfigInstance.username;
+            int port = credentialsConfigInstance.port;
 
-            string constring = DbConnection.conStringBuilder(host, username, password, dbname);
+            string constring = DbConnection.conStringBuilder(host, username, password, dbname,port);
             return DbConnection.Instance().getTableRowsCount(tableName,constring);
         }
 
