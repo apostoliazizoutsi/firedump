@@ -46,17 +46,7 @@ namespace Firedump.service
             //CANT DEBUG/WRITELINE/LOG ON CONSOLE.WRITELINE a service!
             try
             {
-                
-                schedules = new firedumpdbDataSet.schedulesDataTable();
-                schedulesAdapter = new firedumpdbDataSetTableAdapters.schedulesTableAdapter();
-                schedulesAdapter.Fill(schedules);
-
-                scheduleRowList = new List<firedumpdbDataSet.schedulesRow>();
-                //copy schedules to List<>scheduleRowList
-                foreach (firedumpdbDataSet.schedulesRow row in schedules)
-                {
-                    scheduleRowList.Add(row);
-                }
+                setUpScheduleList();
             }catch(Exception ex)
             {
                 File.AppendAllText(@"errorlog.txt",ex.ToString());
@@ -70,6 +60,7 @@ namespace Firedump.service
                 Thread.Sleep(MILLISECS);
                 try
                 {                                    
+                    /*
                     //Set up the current day/hour
                     int day = (int)DateTime.Now.DayOfWeek;
                     int hours = DateTime.Now.Hour;
@@ -81,22 +72,31 @@ namespace Firedump.service
                     if(scheduleRowList.Count > 0)
                     {
                         schedulemanager = new ScheduleManager();
-                        schedulemanager.setSchedule(scheduleRowList[0]);
+                        firedumpdbDataSet.schedulesRow schedule = scheduleRowList[0];
+                        schedulemanager.setSchedule(schedule);
 
                         //Set event delegate callback
-                        //schedulemanager.ScheduleResult += scheduleResult;
+                        schedulemanager.ScheduleResult += scheduleResult;
 
                         //Start the schedule
-                        //DumpResultSet result = schedulemanager.StartDump();
+                        DumpResultSet result = schedulemanager.StartDump();
                         //needs to wait
                         //check result
 
                         //check internet connection
                         //build List<int>locations
-                        //List<LocationResultSet> listRes = schedulemanager.StartSaveLocations(null,result.fileAbsPath);
+                        List<int> locations = new List<int>();
+                        List<LocationResultSet> listRes = schedulemanager.StartSaveLocations(locations, result.fileAbsPath);
                         //check listres
+
+                        //remove scheduleRowList[0] from list 
+                        scheduleRowList.Remove(schedule);
                     }
-                    
+
+                    //if scheduleRowList.Count == 0 fill it from schedule database table
+                    if (scheduleRowList.Count == 0)
+                        setUpScheduleList();
+                   */
                 }
                 catch (Exception ex) {
                     //write ex message to file
@@ -104,6 +104,24 @@ namespace Firedump.service
                 }
             }
         }
+
+
+        private void setUpScheduleList()
+        {
+            schedules = new firedumpdbDataSet.schedulesDataTable();
+            schedulesAdapter = new firedumpdbDataSetTableAdapters.schedulesTableAdapter();
+
+            //FillByDateOrder
+            schedulesAdapter.Fill(schedules);
+
+            scheduleRowList = new List<firedumpdbDataSet.schedulesRow>();
+            //copy schedules to List<>scheduleRowList
+            foreach (firedumpdbDataSet.schedulesRow row in schedules)
+            {
+                scheduleRowList.Add(row);
+            }
+        }
+
 
 
         private void scheduleResult(object ob)
@@ -116,8 +134,7 @@ namespace Firedump.service
             }
             */
         }
-
-
+        
         public bool Stop(HostControl hostControl)
         {
             run = false;

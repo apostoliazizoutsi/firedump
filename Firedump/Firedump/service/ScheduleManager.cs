@@ -37,17 +37,17 @@ namespace Firedump.service
 
         internal DumpResultSet StartDump()
         {
-            //mysqldumpAdapter = new MySqlDumpAdapter();
-            //DumpCredentialsConfig config = new DumpCredentialsConfig();
+            mysqldumpAdapter = new MySqlDumpAdapter();
+            DumpCredentialsConfig config = new DumpCredentialsConfig();
             //set config info
-            //return mysqldumpAdapter.startDumpSync(config);
-            return null;
+            return mysqldumpAdapter.startDumpSync(config);
+            //return null;
         }
 
         internal List<LocationResultSet>  StartSaveLocations(List<int> locations, string sourcePath)
         {
-            //locationAdapterManager = new LocationAdapterManager(locations, sourcePath);
-            //locationAdapterManager.startSave();
+            locationAdapterManager = new LocationAdapterManager(locations, sourcePath);
+            locationAdapterManager.startSave();
 
             return null;
         }
