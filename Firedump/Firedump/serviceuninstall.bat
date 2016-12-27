@@ -1,12 +1,21 @@
-REM RUN AS ADMINISTATOR 
-cd %~dp0
+REM RUN AS ADMINISTATOR else the service cant be installed
+set abspath=%~dp0
+set exec=firedump.exe
+set autaki="
+set abspath=%autaki%%abspath%
+
+set fullpath=%abspath%%exec%
+set fullpath=%fullpath%%autaki%
 
 @ECHO OFF
+ 
+TASKKILL /F /IM %fullpath%
 
-CALL firedump.exe stop
-ECHO Stopping firedump Service
+CALL %fullpath% stop
+ECHO installing %fullpath% service
+
+CALL %fullpath% uninstall
+
+ECHO Starting firedump service
 TIMEOUT /T 2
 
-CALL firedump.exe uninstall
-ECHO Uninstalling firedump Service
-TIMEOUT /T 2
