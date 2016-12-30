@@ -195,24 +195,31 @@ namespace Firedump.models.databaseUtils
         /// <returns>A list of the tables in the database</returns>
         public List<string> getTables(String database)
         {
-            connection = new MySqlConnection(conStringBuilder());
-            connection.Open();
-            List<string> tables = new List<string>();
+            try {
+                connection = new MySqlConnection(conStringBuilder());
+                connection.Open();
+                List<string> tables = new List<string>();
 
-            string query = "show tables from "+database+";";
-            MySqlCommand command = new MySqlCommand(query, connection);
-            MySqlDataReader reader = command.ExecuteReader();
-            while(reader.Read())
+                string query = "show tables from " + database + ";";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    tables.Add(reader.GetString(0));
+                }
+
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+                return tables;
+            }
+            catch(Exception ex)
             {
-                tables.Add(reader.GetString(0));
+                Console.WriteLine(ex.ToString());
             }
 
-            if (connection.State == ConnectionState.Open)
-            {
-                connection.Close();
-            }
-
-            return tables;
+            return null;
         }
 
 

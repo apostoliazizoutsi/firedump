@@ -141,6 +141,11 @@
     <Compile Include="firedumpdbDataSet.cs">
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="firedumpdbDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Forms\location\FileSystem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,11 +242,6 @@
       <DependentUpon>emailconfig.cs</DependentUpon>
     </Compile>
     <Compile Include="models\email\email.cs" />
-    <Compile Include="firedumpdbDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Forms\location\LocationSwitchboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -437,8 +437,8 @@
     </None>
     <None Include="firedumpdbDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>firedumpdbDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>firedumpdbDataSet.Designer.cs</LastGenOutput>
     </None>
     <None Include="firedumpdbDataSet.xss">
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>

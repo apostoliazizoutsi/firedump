@@ -113,37 +113,7 @@ namespace Firedump.models.dump
             mysqldumpTask.Start();
             
         }
-
-
-
-        /// <summary>
-        /// Sync dump for the service
-        /// </summary>
-        /// <param name="credentialsConfigInstance"></param>
-        public DumpResultSet startDumpSync(DumpCredentialsConfig credentialsConfigInstance)
-        {
-            this.credentialsConfigInstance = credentialsConfigInstance;
-            mydump = new MysqlDump();
-            mydump.credentialsConfigInstance = credentialsConfigInstance;
-            DumpResultSet result = null;
-            try {
-                result = mydump.executeDump();
-            }catch(Exception ex)
-            {
-                if (!(ex is NullReferenceException))
-                {
-                    result = new DumpResultSet();
-                    result.wasSuccessful = false;
-                    result.errorNumber = 2;
-                    result.mysqldumpexeStandardError = "Error in MySQLDumpAdapter:\n" + ex.Message;
-                }
-            }
-
-            mydump = null;
-            return result;
-        }
         
-
        
         /// <summary>
         /// main mysql dump executor task
@@ -220,24 +190,29 @@ namespace Firedump.models.dump
 
         async Task<List<string>>  testCon()
         {
-            string host = this.credentialsConfigInstance.host;
-            int port = this.credentialsConfigInstance.port;
-            string username = this.credentialsConfigInstance.username;
-            string password = this.credentialsConfigInstance.password;
-            string database = this.credentialsConfigInstance.database;
-            DbConnection con = DbConnection.Instance();
-            con.Host = host;
-            con.username = username;
-            con.password = password;
-            con.database = database;
-            con.port = port;
-            bool success = con.testConnection().wasSuccessful;
-            if(success)
+            try {
+                string host = this.credentialsConfigInstance.host;
+                int port = this.credentialsConfigInstance.port;
+                string username = this.credentialsConfigInstance.username;
+                string password = this.credentialsConfigInstance.password;
+                string database = this.credentialsConfigInstance.database;
+                DbConnection con = DbConnection.Instance();
+                con.Host = host;
+                con.username = username;
+                con.password = password;
+                con.database = database;
+                con.port = port;
+                bool success = con.testConnection().wasSuccessful;
+                if (success)
+                {
+                    return con.getTables(database);
+                    //return con.getTables(database);
+                    //return tableList;
+                }
+            }catch(Exception ex)
             {
-
-                //return con.getTables(database);
-                return tableList;
             }
+
             return null;
         }
 

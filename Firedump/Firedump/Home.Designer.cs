@@ -49,6 +49,7 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importSQLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.schedulerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bStartDump = new System.Windows.Forms.Button();
             this.pbDumpExec = new System.Windows.Forms.ProgressBar();
             this.lStatusLabel = new System.Windows.Forms.Label();
@@ -61,7 +62,6 @@
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cancel = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.schedulerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -269,6 +269,13 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
+            // schedulerToolStripMenuItem
+            // 
+            this.schedulerToolStripMenuItem.Name = "schedulerToolStripMenuItem";
+            this.schedulerToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.schedulerToolStripMenuItem.Text = "Scheduler";
+            this.schedulerToolStripMenuItem.Click += new System.EventHandler(this.schedulerToolStripMenuItem_Click);
+            // 
             // bStartDump
             // 
             this.bStartDump.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
@@ -369,13 +376,6 @@
             this.cancel.HeaderText = "Cancel";
             this.cancel.Name = "cancel";
             this.cancel.Text = "cancel";
-            // 
-            // schedulerToolStripMenuItem
-            // 
-            this.schedulerToolStripMenuItem.Name = "schedulerToolStripMenuItem";
-            this.schedulerToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.schedulerToolStripMenuItem.Text = "Scheduler";
-            this.schedulerToolStripMenuItem.Click += new System.EventHandler(this.schedulerToolStripMenuItem_Click);
             // 
             // Home
             // 

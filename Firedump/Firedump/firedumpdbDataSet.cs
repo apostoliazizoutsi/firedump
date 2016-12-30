@@ -4,6 +4,10 @@
 
     partial class firedumpdbDataSet
     {
+        partial class schedulesDataTable
+        {
+        }
+
         partial class mysql_serversDataTable
         {
         }

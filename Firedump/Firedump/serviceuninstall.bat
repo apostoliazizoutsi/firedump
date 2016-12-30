@@ -5,7 +5,7 @@ cd %~dp0
 
 CALL firedump.exe stop
 ECHO Stopping firedump Service
-TIMEOUT /T 2
+TIMEOUT /T 3
 
 CALL firedump.exe uninstall
 ECHO Uninstalling firedump Service

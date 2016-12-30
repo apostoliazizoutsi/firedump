@@ -114,5 +114,27 @@ namespace Firedump.utils
             return counter;
         }
 
+
+        public static List<string> extractTableListFromString(string tablestring)
+        {
+            if (String.IsNullOrEmpty(tablestring))
+            {
+                return new List<string>();
+            }
+
+            string[] arr = tablestring.Split('-');
+
+            List<string> tablelist = new List<string>();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (!String.IsNullOrEmpty(arr[i]))
+                {
+                    tablelist.Add(arr[i]);
+                }
+            }
+
+            return tablelist;
+        }
+
     }
 }
