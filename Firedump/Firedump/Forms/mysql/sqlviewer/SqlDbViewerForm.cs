@@ -52,44 +52,49 @@ namespace Firedump.Forms.mysql.sqlviewer
             connection.username = server.username;
             connection.password = server.password;
             connection.Host = server.host;
+            connection.port = (int)server.port;
 
-
-            if(connection.testConnection().wasSuccessful)
-            {
-                this.server = server;
-                this.database = database;
-                List<string> tables = connection.getTables(database);
-                MysqlWords.tables = tables;
-
-                TreeNode[] nodearray = new TreeNode[tables.Count];
-                for (int i = 0; i < tables.Count; i++)
+            try {
+                if (connection.testConnection().wasSuccessful)
                 {
-                    TreeNode treenode = new TreeNode(tables[i]);
-                    treenode.ImageIndex = 1;
-                    nodearray[i] = treenode;
-                }
-                for (int i = 0; i < MysqlWords.tables.Count; i++)
-                {
-                    MysqlWords.tables[i] = MysqlWords.tables[i].ToUpper();
-                }
-                
-                ImageList imagelist = new ImageList();
-                imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\databaseimage.bmp"));
-                imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\tableimage.bmp"));
-                
-                TreeNode rootNode = new TreeNode("database:" + database, nodearray);
-                rootNode.ImageIndex = 1;
-                rootNode.ImageIndex = 0;
-                rootNode.Expand();
-                
-                treeView1.Nodes.Add(rootNode);
+                    this.server = server;
+                    this.database = database;
+                    List<string> tables = connection.getTables(database);
+                    MysqlWords.tables = tables;
 
-                treeView1.ImageIndex = 0;
-                treeView1.ImageList = imagelist;
-            }
-            else
+                    TreeNode[] nodearray = new TreeNode[tables.Count];
+                    for (int i = 0; i < tables.Count; i++)
+                    {
+                        TreeNode treenode = new TreeNode(tables[i]);
+                        treenode.ImageIndex = 1;
+                        nodearray[i] = treenode;
+                    }
+                    for (int i = 0; i < MysqlWords.tables.Count; i++)
+                    {
+                        MysqlWords.tables[i] = MysqlWords.tables[i].ToUpper();
+                    }
+
+                    ImageList imagelist = new ImageList();
+                    imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\databaseimage.bmp"));
+                    imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\tableimage.bmp"));
+
+                    TreeNode rootNode = new TreeNode("database:" + database, nodearray);
+                    rootNode.ImageIndex = 1;
+                    rootNode.ImageIndex = 0;
+                    rootNode.Expand();
+
+                    treeView1.Nodes.Add(rootNode);
+
+                    treeView1.ImageIndex = 0;
+                    treeView1.ImageList = imagelist;
+                }
+                else
+                {
+                    MessageBox.Show("Couldent connect to " + database + " database");
+                }
+            }catch(Exception ex)
             {
-                MessageBox.Show("Couldent connect to "+database+" database");                
+                MessageBox.Show(ex.ToString());
             }
 
             richTextBox1.Text = "";
@@ -153,29 +158,45 @@ namespace Firedump.Forms.mysql.sqlviewer
             if(!String.IsNullOrEmpty(query))
             {
                 undoList.Push(query);
-                string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database);
-                using (MySqlConnection con = new MySqlConnection(connectionString))
-                {                   
-                    MySqlCommand command = new MySqlCommand();
-                    command.Connection = con;
-                    command.CommandText = query;
-                    con.Open();
-                    int numofrowsupdated = command.ExecuteNonQuery();
-                    command.Dispose();
-
-                    if(!String.IsNullOrEmpty(lastQuery))
+                try {
+                    string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database,(int)server.port);
+                    using (MySqlConnection con = new MySqlConnection(connectionString))
                     {
-                        string[] sqlarr = lastQuery.Split(' ');
-                        richTextBox1.Text = "";
-                        for (int i = 0; i < sqlarr.Length; i++)
+                        MySqlCommand command = new MySqlCommand();
+                        command.Connection = con;
+                        command.CommandText = query;
+                        con.Open();
+                        int numofrowsupdated = command.ExecuteNonQuery();
+                        command.Dispose();
+
+                        if (!String.IsNullOrEmpty(lastQuery))
                         {
-                            richTextBox1.AppendText(sqlarr[i] + " ");
-                            richTextBox1.SelectionStart = richTextBox1.TextLength;
-                            setSqlHighlight();
+                            string[] sqlarr = lastQuery.Split(' ');
+                            richTextBox1.Text = "";
+                            for (int i = 0; i < sqlarr.Length; i++)
+                            {
+                                richTextBox1.AppendText(sqlarr[i] + " ");
+                                richTextBox1.SelectionStart = richTextBox1.TextLength;
+                                setSqlHighlight();
+                            }
+                            executeQuery(lastQuery);
                         }
-                        executeQuery(lastQuery);
+
                     }
-                   
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    DataSet dataset = new DataSet();
+                    DataTable datatable = new DataTable("MySql Error");
+                    datatable.Columns.Add(new DataColumn("Type", typeof(string)));
+                    datatable.Columns.Add(new DataColumn("Message", typeof(string)));
+                    DataRow datarow = datatable.NewRow();
+                    datarow["Type"] = "MySql Error";
+                    datarow["Message"] = ex.Message;
+                    datatable.Rows.Add(datarow);
+                    dataset.Tables.Add(datatable);
+
+                    dataGridView1.DataSource = dataset.Tables[0];
                 }
             }
         }
@@ -187,42 +208,58 @@ namespace Firedump.Forms.mysql.sqlviewer
             {
                 undoList.Push(query);
                 string sql = limitQuery(query);
-                
-                string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database);
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    
-                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(sql, connection))
+
+                try {
+                    string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database, (int)server.port);
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
                     {
-                        try
+                        connection.Open();
+
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(sql, connection))
                         {
-                            DataSet dataset = new DataSet();                           
-                            BindingSource bs = new BindingSource();
-                            adapter.Fill(dataset);
-                            bs.DataSource = dataset.Tables[0].DefaultView;
-                            dataGridView1.DataSource = bs;
+                            try
+                            {
+                                DataSet dataset = new DataSet();
+                                BindingSource bs = new BindingSource();
+                                adapter.Fill(dataset);
+                                bs.DataSource = dataset.Tables[0].DefaultView;
+                                dataGridView1.DataSource = bs;
 
-                            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-                            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                                dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                            }
+                            catch (MySqlException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                                DataSet dataset = new DataSet();
+                                DataTable datatable = new DataTable("MySql Error");
+                                datatable.Columns.Add(new DataColumn("Type", typeof(string)));
+                                datatable.Columns.Add(new DataColumn("Message", typeof(string)));
+                                DataRow datarow = datatable.NewRow();
+                                datarow["Type"] = "MySql Error";
+                                datarow["Message"] = ex.Message;
+                                datatable.Rows.Add(datarow);
+                                dataset.Tables.Add(datatable);
+
+                                dataGridView1.DataSource = dataset.Tables[0];
+                            }
+
                         }
-                        catch (MySqlException ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                            DataSet dataset = new DataSet();
-                            DataTable datatable = new DataTable("MySql Error");
-                            datatable.Columns.Add(new DataColumn("Type", typeof(string)));
-                            datatable.Columns.Add(new DataColumn("Message", typeof(string)));
-                            DataRow datarow = datatable.NewRow();
-                            datarow["Type"] = "MySql Error";
-                            datarow["Message"] = ex.Message;
-                            datatable.Rows.Add(datarow);
-                            dataset.Tables.Add(datatable);
-
-                            dataGridView1.DataSource = dataset.Tables[0];
-                        }
-
                     }
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    DataSet dataset = new DataSet();
+                    DataTable datatable = new DataTable("MySql Error");
+                    datatable.Columns.Add(new DataColumn("Type", typeof(string)));
+                    datatable.Columns.Add(new DataColumn("Message", typeof(string)));
+                    DataRow datarow = datatable.NewRow();
+                    datarow["Type"] = "MySql Error";
+                    datarow["Message"] = ex.Message;
+                    datatable.Rows.Add(datarow);
+                    dataset.Tables.Add(datatable);
+
+                    dataGridView1.DataSource = dataset.Tables[0];
                 }
             }
         }

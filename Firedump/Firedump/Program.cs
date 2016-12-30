@@ -71,6 +71,8 @@ namespace Firedump
                 x.RunAsLocalSystem();             
                 //kathe fora pou allazei afto ama den egine to palio service uninstall meni sta windows
                 x.SetServiceName(Consts.SERVICE_NAME);
+
+                x.UseNLog();
                 
                 //topshelf supper BUG in setting displayName
                 //tha kanei set to service name kai tha ftiaksei dio diaforetika services sta windows service registry!

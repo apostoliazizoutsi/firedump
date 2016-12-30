@@ -43,67 +43,73 @@ namespace Firedump.Forms.mysql.status
             con.password = server.password;
             con.Host = server.host;
             con.database = database;
+            con.port = (int)server.port;
 
-            if (con.testConnection().wasSuccessful)
-            {
-                List<string> t = con.getTables(database);
-                tables = new List<MyTable>();
-                for(int i =0; i < t.Count; i++)
+            try {
+                if (con.testConnection().wasSuccessful)
                 {
-                    tables.Add(new MyTable(t[i]));
-                }
-                int tablesCount = tables.Count;
-                label5.Text += " " + tablesCount;
-                string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database);
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    //database size in mb
-                    connection.Open();
-                    string sql = "SELECT table_schema " + database +
-                       " , SUM(data_length + index_length)  / (1024 * 1024) " +
-                       "FROM   information_schema.tables " +
-                       "GROUP  BY table_schema; ";
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
+                    List<string> t = con.getTables(database);
+                    tables = new List<MyTable>();
+                    for (int i = 0; i < t.Count; i++)
                     {
-                        try
+                        tables.Add(new MyTable(t[i]));
+                    }
+                    int tablesCount = tables.Count;
+                    label5.Text += " " + tablesCount;
+                    string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database,(int)server.port);
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    {
+                        //database size in mb
+                        connection.Open();
+                        string sql = "SELECT table_schema " + database +
+                           " , SUM(data_length + index_length)  / (1024 * 1024) " +
+                           "FROM   information_schema.tables " +
+                           "GROUP  BY table_schema; ";
+                        using (MySqlCommand command = new MySqlCommand(sql, connection))
+                        {
+                            try
+                            {
+                                using (MySqlDataReader reader = command.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        if (reader.GetString(database) == database)
+                                        {
+                                            int size = reader.GetInt32("SUM(data_length + index_length)  / (1024 * 1024)");
+                                            label6.Text += " " + size + " MB";
+                                            break;
+                                        }
+                                    }
+                                }
+                            } catch (MySqlException ex)
+                            {
+                                //handle exception
+                            }
+
+                        }
+
+                        //get default database charset
+                        sql = "SELECT @@character_set_database, @@collation_database;";
+                        using (MySqlCommand command = new MySqlCommand(sql, connection))
                         {
                             using (MySqlDataReader reader = command.ExecuteReader())
                             {
-                                while (reader.Read())
+                                if (reader.Read())
                                 {
-                                    if (reader.GetString(database) == database)
-                                    {
-                                        int size = reader.GetInt32("SUM(data_length + index_length)  / (1024 * 1024)");
-                                        label6.Text += " " +size + " MB";
-                                        break;
-                                    }
+                                    string charset = reader.GetString("@@character_set_database");
+                                    label4.Text += " " + charset;
+                                    string collation = reader.GetString("@@collation_database");
+                                    label3.Text += " " + collation;
                                 }
                             }
-                        }catch(MySqlException ex)
-                        {
-                            //handle exception
                         }
-                        
-                    }
 
-                    //get default database charset
-                    sql = "SELECT @@character_set_database, @@collation_database;";
-                    using (MySqlCommand command = new MySqlCommand(sql,connection))
-                    {
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            if(reader.Read())
-                            {
-                                string charset = reader.GetString("@@character_set_database");
-                                label4.Text += " " + charset;
-                                string collation = reader.GetString("@@collation_database");
-                                label3.Text += " " + collation;
-                            }
-                        }
-                    }
 
-                    
+                    }
                 }
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
            
         }
@@ -114,43 +120,48 @@ namespace Firedump.Forms.mysql.status
             List<TableInfo> tableInfoList = new List<TableInfo>();
             foreach(MyTable table in tables)
             {
-                string connectionString = DbConnection.conStringBuilder(server.host,server.username,server.password,database);
-                using (MySqlConnection con = new MySqlConnection(connectionString))
-                {
-                    con.Open();
-                    string sql = "SHOW TABLE STATUS WHERE NAME = '"+table.TableName+"' ";
-                    using (MySqlCommand command = new MySqlCommand(sql,con))
+                string connectionString = DbConnection.conStringBuilder(server.host,server.username,server.password,database,(int)server.port);
+                try {
+                    using (MySqlConnection con = new MySqlConnection(connectionString))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        con.Open();
+                        string sql = "SHOW TABLE STATUS WHERE NAME = '" + table.TableName + "' ";
+                        using (MySqlCommand command = new MySqlCommand(sql, con))
                         {
-                            if(reader.Read())
+                            using (MySqlDataReader reader = command.ExecuteReader())
                             {
-                                TableInfo tableInfo = new TableInfo();
-                                tableInfo.Table = table.TableName;
-                                string engine = reader.GetString("Engine");
-                                int version = reader.GetInt32("Version");
-                                string rowFormat = reader.GetString("Row_format");
-                                Int64 rows = reader.GetInt32("Rows");
-                                Int64 avgrowLength = reader.GetInt32("Avg_row_length");
-                                Int64 dataLength = reader.GetInt32("Data_length");
-                                Int64 indexLength = reader.GetInt32("Index_length");
-                                string createTime = reader.GetString("Create_time");
-                                string collation = reader.GetString("Collation");
+                                if (reader.Read())
+                                {
+                                    TableInfo tableInfo = new TableInfo();
+                                    tableInfo.Table = table.TableName;
+                                    string engine = reader.GetString("Engine");
+                                    int version = reader.GetInt32("Version");
+                                    string rowFormat = reader.GetString("Row_format");
+                                    Int64 rows = reader.GetInt32("Rows");
+                                    Int64 avgrowLength = reader.GetInt32("Avg_row_length");
+                                    Int64 dataLength = reader.GetInt32("Data_length");
+                                    Int64 indexLength = reader.GetInt32("Index_length");
+                                    string createTime = reader.GetString("Create_time");
+                                    string collation = reader.GetString("Collation");
 
-                                tableInfo.Engine = engine;
-                                tableInfo.Version = version;
-                                tableInfo.RowFormat = rowFormat;
-                                tableInfo.Rows = rows;
-                                tableInfo.AvgRowLength = avgrowLength;
-                                tableInfo.DataLength = dataLength;
-                                tableInfo.IndexLength = indexLength;
-                                tableInfo.CreateTime = createTime;
-                                tableInfo.Collation = collation;
+                                    tableInfo.Engine = engine;
+                                    tableInfo.Version = version;
+                                    tableInfo.RowFormat = rowFormat;
+                                    tableInfo.Rows = rows;
+                                    tableInfo.AvgRowLength = avgrowLength;
+                                    tableInfo.DataLength = dataLength;
+                                    tableInfo.IndexLength = indexLength;
+                                    tableInfo.CreateTime = createTime;
+                                    tableInfo.Collation = collation;
 
-                                tableInfoList.Add(tableInfo);
+                                    tableInfoList.Add(tableInfo);
+                                }
                             }
                         }
                     }
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
 
@@ -162,32 +173,37 @@ namespace Firedump.Forms.mysql.status
             List<ColumnInfo> columnInfoList = new List<ColumnInfo>();
             foreach(MyTable table in tables)
             {
-                string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database);
-                using (MySqlConnection con = new MySqlConnection(connectionString))
-                {
-                    con.Open();
-                    string sql = "DESCRIBE " + table.TableName;
-                    using (MySqlCommand command = new MySqlCommand(sql,con))
+                string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database,(int)server.port);
+                try {
+                    using (MySqlConnection con = new MySqlConnection(connectionString))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        con.Open();
+                        string sql = "DESCRIBE " + table.TableName;
+                        using (MySqlCommand command = new MySqlCommand(sql, con))
                         {
-                            while(reader.Read())
+                            using (MySqlDataReader reader = command.ExecuteReader())
                             {
-                                ColumnInfo col = new ColumnInfo();
-                                string Field = reader.GetString("Field");
-                                string Type = reader.GetString("Type");
-                                string isNull = reader.GetString("Null");
+                                while (reader.Read())
+                                {
+                                    ColumnInfo col = new ColumnInfo();
+                                    string Field = reader.GetString("Field");
+                                    string Type = reader.GetString("Type");
+                                    string isNull = reader.GetString("Null");
 
-                                col.Table = table.TableName;
-                                col.Default = "";
-                                col.Type = Type;
-                                col.Field = Field;
-                                col.IsNullable = isNull;
-                                columnInfoList.Add(col);
+                                    col.Table = table.TableName;
+                                    col.Default = "";
+                                    col.Type = Type;
+                                    col.Field = Field;
+                                    col.IsNullable = isNull;
+                                    columnInfoList.Add(col);
+                                }
                             }
                         }
                     }
-                }              
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }            
             }
 
             datagridviewColumns.DataSource = columnInfoList;
@@ -199,35 +215,40 @@ namespace Firedump.Forms.mysql.status
             List<Indexes> indexesList = new List<Indexes>();
             foreach (MyTable table in tables)
             {
-                string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database);
-                using (MySqlConnection con = new MySqlConnection(connectionString))
-                {
-                    con.Open();
-                    string sql = "SHOW INDEX FROM "+table.TableName;
-                    using (MySqlCommand command = new MySqlCommand(sql, con))
+                try {
+                    string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database, (int)server.port);
+                    using (MySqlConnection con = new MySqlConnection(connectionString))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        con.Open();
+                        string sql = "SHOW INDEX FROM " + table.TableName;
+                        using (MySqlCommand command = new MySqlCommand(sql, con))
                         {
-                            while (reader.Read())
+                            using (MySqlDataReader reader = command.ExecuteReader())
                             {
-                                Indexes index = new Indexes();
-                                index.Table = table.TableName;
-                                string unique;
-                                if (reader.GetInt32("Non_unique") == 0)
-                                    unique = "TRUE";
-                                else
-                                    unique = "FALSE";
-                                index.Unique = unique;
-                                index.KeyName = reader.GetString("Key_name");
-                                index.SeqInIndex = reader.GetInt32("Seq_in_index");
-                                index.ColumnName = reader.GetString("Column_name");
-                                index.Cardinality = reader.GetInt32("Cardinality");
-                                index.IndexType = reader.GetString("Index_type");
+                                while (reader.Read())
+                                {
+                                    Indexes index = new Indexes();
+                                    index.Table = table.TableName;
+                                    string unique;
+                                    if (reader.GetInt32("Non_unique") == 0)
+                                        unique = "TRUE";
+                                    else
+                                        unique = "FALSE";
+                                    index.Unique = unique;
+                                    index.KeyName = reader.GetString("Key_name");
+                                    index.SeqInIndex = reader.GetInt32("Seq_in_index");
+                                    index.ColumnName = reader.GetString("Column_name");
+                                    index.Cardinality = reader.GetInt32("Cardinality");
+                                    index.IndexType = reader.GetString("Index_type");
 
-                                indexesList.Add(index);
+                                    indexesList.Add(index);
+                                }
                             }
                         }
                     }
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
 
             }
