@@ -1,22 +1,14 @@
-# firedump 
+# firedump ,MySqlBackup scheduler and more...
+######On Development
 <img src="https://raw.githubusercontent.com/avraampiperidis/firedump/master/Firedump/Firedump/resources/firedump.png" width="450"/>
 <br>
-#### Ergasia gia ADOPSE
+#### 
 ========
-firedump Page <br>https://avraampiperidis.github.io/firedump/ <br><br>
-Download and check this http://mysqlbackupftp.com/ (it will be our guide!) <br>
-after downloading and installing vs 2015 install this,in options choose all <br>
-http://system.data.sqlite.org/downloads/1.0.103.0/sqlite-netFx46-setup-bundle-x86-2015-1.0.103.0.exe <br>
-<br>
-otan einai neo clone sto visual studio 2015 xriazete afto gia na traviksei ta references apo nuget <br>
-
-Visual studio 2015 -> Tools->Nuget Package Manager->Package Manager Console
-Nuget reinstall Command:<br>  Update-Package –reinstall
-
+firedump Page <br>https://avraampiperidis.github.io/firedump/ <br>
+Build/Test reports(Jenkins) <br>http://35.156.193.61/result/<br>
 <br>
 Avraam Piperidis<br>
 Valantis Pitsas<br>
-Chenyang Ji <br>
 <br>
 <br>
 some early pics.<br>
