@@ -16,7 +16,6 @@ Nuget reinstall Command:<br>  Update-Package –reinstall
 <br>
 Avraam Piperidis<br>
 Valantis Pitsas<br>
-Chenyang Ji <br>
 <br>
 <br>
 some early pics.<br>
