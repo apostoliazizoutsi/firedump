@@ -4,7 +4,8 @@
 <br>
 #### 
 ========
-firedump Page <br>https://avraampiperidis.github.io/firedump/ <br><br>
+firedump Page <br>https://avraampiperidis.github.io/firedump/ <br>
+Build/Test reports(Jenkins) <br>http://35.156.193.61/result/<br>
 <br>
 Avraam Piperidis<br>
 Valantis Pitsas<br>
