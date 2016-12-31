@@ -177,6 +177,12 @@
     <Compile Include="Forms\mysql\sqlviewer\IntelliSense.Designer.cs">
       <DependentUpon>IntelliSense.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\schedule\NewJobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\schedule\NewJobForm.Designer.cs">
+      <DependentUpon>NewJobForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\schedule\SchedulerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +207,7 @@
     <Compile Include="models\configuration\dynamicconfig\ImportCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
     <Compile Include="models\dump\CompressionAdapter.cs" />
+    <Compile Include="models\pojos\JobDetail.cs" />
     <Compile Include="models\pojos\ServiceStatus.cs" />
     <Compile Include="models\sqlimport\ImportAdapter.cs" />
     <Compile Include="models\sqlimport\ImportAdapterManager.cs" />
@@ -386,6 +393,9 @@
     <EmbeddedResource Include="Forms\mysql\sqlviewer\IntelliSense.resx">
       <DependentUpon>IntelliSense.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\schedule\NewJobForm.resx">
+      <DependentUpon>NewJobForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\schedule\SchedulerForm.resx">
       <DependentUpon>SchedulerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -491,6 +501,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="serviceinstall.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="servicerestart.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="servicestart.bat">
