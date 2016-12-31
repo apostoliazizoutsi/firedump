@@ -142,6 +142,7 @@ namespace Firedump.Forms.schedule
             if (sc == null)
             {
                 MessageBox.Show("Install the Service First!");
+                serviceManager1.setStatusText("Install the Service First!");
                 return;
             }
 
@@ -169,12 +170,15 @@ namespace Firedump.Forms.schedule
             if (sc == null)
             {
                 MessageBox.Show("Error, cant start the service");
+                serviceManager1.setStatusText("Error, cant start the service");
+                serviceManager1.setPictureIcon(false);
             }
             else
             {
                 if (sc.Status == ServiceControllerStatus.Running)
                 {
-                    MessageBox.Show("Service started");
+                    serviceManager1.setStatusText("Service started");
+                    serviceManager1.setPictureIcon(true);
                 }
 
             }
@@ -206,9 +210,8 @@ namespace Firedump.Forms.schedule
                     {
                         DialogResult result = MessageBox.Show("Are you sure you want to delete this Job and its locations?", "Delete Schedule-Job", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (result == DialogResult.Yes)
-                        {
-                            //firt delete backuplocations if any
-                            //then delete savelocations
+                        {                          
+                            //delete savelocations
                             //and finally delete from schedule
                         }
                     }

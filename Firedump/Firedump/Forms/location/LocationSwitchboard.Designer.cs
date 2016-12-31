@@ -77,6 +77,7 @@
             this.bDropbox.TabIndex = 2;
             this.bDropbox.Text = "Dropbox";
             this.bDropbox.UseVisualStyleBackColor = true;
+            this.bDropbox.Click += new System.EventHandler(this.bDropbox_Click);
             // 
             // groupBox1
             // 

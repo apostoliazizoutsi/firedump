@@ -38,6 +38,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dropbox.Api, Version=0.1.6165.22196, Culture=neutral, PublicKeyToken=310f0e82fbb45d01, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dropbox.Api.4.1\lib\net45\Dropbox.Api.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Effort, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\Effort.EF6.1.2.0\lib\net45\Effort.dll</HintPath>
       <Private>True</Private>
@@ -145,6 +149,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\location\DropboxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\location\DropboxForm.Designer.cs">
+      <DependentUpon>DropboxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\location\FileSystem.cs">
       <SubType>Form</SubType>
@@ -366,6 +376,9 @@
     <Compile Include="models\databaseUtils\SqlUtils.cs" />
     <Compile Include="utils\OS.cs" />
     <Compile Include="utils\StringUtils.cs" />
+    <EmbeddedResource Include="Forms\location\DropboxForm.resx">
+      <DependentUpon>DropboxForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\location\FileSystem.resx">
       <DependentUpon>FileSystem.cs</DependentUpon>
     </EmbeddedResource>

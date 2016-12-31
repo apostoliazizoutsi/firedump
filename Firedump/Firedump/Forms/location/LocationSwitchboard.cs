@@ -203,5 +203,11 @@ namespace Firedump.Forms.location
             }
             
         }
+
+        private void bDropbox_Click(object sender, EventArgs e)
+        {
+            DropboxForm boxform = new DropboxForm(this);
+            boxform.Show();
+        }
     }
 }
