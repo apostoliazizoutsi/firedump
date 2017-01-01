@@ -1,4 +1,5 @@
-﻿using Firedump.models.location;
+﻿using Firedump.models;
+using Firedump.models.location;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -67,11 +68,11 @@ namespace Firedump.Forms.location
             {
                 if (isEditor)
                 {
-                    adapter.Update(tbName.Text, "", "", tbPath.Text, "", 0, 0, "", "", "", "", "", "", "", 0, 0, "", "", 0, "", 0, (Int64)locallocation["id"]);
+                    adapter.Update(tbName.Text, "", "", tbPath.Text, "", (int)ServiceType.Type.Local, 0, "", "", "", "", "", "", "", 0, 0, "", "", 0, "", 0, (Int64)locallocation["id"]);
                 }
                 else
                 {
-                    adapter.Insert(tbName.Text, "", "", tbPath.Text, "", 0, 0, "", "", "", "", "", "", "", 0, 0, "", "", 0, "", 0);
+                    adapter.Insert(tbName.Text, "", "", tbPath.Text, "", (int)ServiceType.Type.Local, 0, "", "", "", "", "", "", "", 0, 0, "", "", 0, "", 0);
                 }                
                 locswitch.reloadDataset(); //callback stin klasi pou to kalese na kanei refresh to combobox
                 this.Close();

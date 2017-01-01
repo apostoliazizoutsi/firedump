@@ -219,6 +219,7 @@
     <Compile Include="models\dump\CompressionAdapter.cs" />
     <Compile Include="models\pojos\JobDetail.cs" />
     <Compile Include="models\pojos\ServiceStatus.cs" />
+    <Compile Include="models\ServiceType.cs" />
     <Compile Include="models\sqlimport\ImportAdapter.cs" />
     <Compile Include="models\sqlimport\ImportAdapterManager.cs" />
     <Compile Include="models\sqlimport\ImportResultSet.cs" />

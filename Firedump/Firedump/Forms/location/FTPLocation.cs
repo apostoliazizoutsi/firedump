@@ -10,6 +10,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Firedump.models;
 
 namespace Firedump.Forms.location
 {
@@ -159,11 +160,11 @@ namespace Firedump.Forms.location
             {
                 if (isEditor)
                 {
-                    backup_adapter.Update(tbName.Text, tbUsername.Text, tbPassword.Text, tbChooseAPath.Text, tbFilename.Text, 1, protocol, tbPrivateKey.Text, sshKeyFingerprint, "", "", "", "", "", 0, 0, "", "", Convert.ToInt64(tbPort.Text), tbHost.Text, protocol, (Int64)ftplocation["id"]);
+                    backup_adapter.Update(tbName.Text, tbUsername.Text, tbPassword.Text, tbChooseAPath.Text, tbFilename.Text, (int)ServiceType.Type.Ftp, protocol, tbPrivateKey.Text, sshKeyFingerprint, "", "", "", "", "", 0, 0, "", "", Convert.ToInt64(tbPort.Text), tbHost.Text, protocol, (Int64)ftplocation["id"]);
                 }
                 else
                 {
-                    backup_adapter.Insert(tbName.Text, tbUsername.Text, tbPassword.Text, tbChooseAPath.Text, tbFilename.Text, 1, protocol, tbPrivateKey.Text, sshKeyFingerprint, "", "", "", "", "", 0, 0, "", "", Convert.ToInt64(tbPort.Text), tbHost.Text, protocol);
+                    backup_adapter.Insert(tbName.Text, tbUsername.Text, tbPassword.Text, tbChooseAPath.Text, tbFilename.Text, (int)ServiceType.Type.Ftp, protocol, tbPrivateKey.Text, sshKeyFingerprint, "", "", "", "", "", 0, 0, "", "", Convert.ToInt64(tbPort.Text), tbHost.Text, protocol);
                 }
                 listener.reloadDataset();
                 this.Close();
