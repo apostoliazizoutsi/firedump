@@ -457,6 +457,8 @@ namespace Firedump
             adapter.Progress += onProgressHandler;
             adapter.TableRowCount += tableRowCountHandler;
             adapter.TableStartDump += onTableDumpStartHandler;
+
+            this.UseWaitCursor = true;
             adapter.startDump(config);
             
         }
@@ -531,7 +533,8 @@ namespace Firedump
 
         private void cancelDumpClick(object sender, EventArgs e)
         {
-            if(adapter != null)
+            this.UseWaitCursor = false;
+            if (adapter != null)
             {
                 adapter.cancelDump();
                 Task task = new Task(resetProgressBarAfterCancel);
@@ -615,6 +618,7 @@ namespace Firedump
 
         private void onErrorHandler(int error)
         {
+            this.UseWaitCursor = false;
             lStatus.Invoke((MethodInvoker)delegate () {
                 //to error pernei sigkekrimenes times
                 //opote mporoume na to diksoume kalitera more info error
@@ -626,6 +630,7 @@ namespace Firedump
 
         private void onCancelledHandler()
         {
+            this.UseWaitCursor = false;
             lStatus.Invoke((MethodInvoker)delegate () {              
                 lStatus.Text = "Cancelled";
             });
@@ -684,6 +689,7 @@ namespace Firedump
                 }
                 else
                 {
+                    this.UseWaitCursor = false;
                     string errorMessage = "";
                     switch (status.errorNumber)
                     {
@@ -714,6 +720,9 @@ namespace Firedump
                 //
                 //gia ui components xriazete Invoke
                 
+            } else
+            {
+                this.UseWaitCursor = false;
             }
         }
 
@@ -865,6 +874,7 @@ namespace Firedump
 
         private void onSaveCompleteHandler(List<LocationResultSet> results)
         {
+            this.UseWaitCursor = false;
             lStatus?.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "Save complete!";
                 tableRowCountHandler(-1);
@@ -907,6 +917,7 @@ namespace Firedump
 
         private void onSaveErrorHandler(string message)
         {
+            this.UseWaitCursor = false;
             MessageBox.Show("Save to locations failed:\n"+message,"Locations Save",MessageBoxButtons.OK,MessageBoxIcon.Error);
         }
 

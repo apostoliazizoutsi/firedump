@@ -48,21 +48,23 @@ namespace Firedump.Forms.mysql
         
 
         private void bTestConnection_Click(object sender, EventArgs e)
-        {
-
+        {           
             if (!performChecks())
             {
                 return;
             }
 
+            this.UseWaitCursor = true;
             //test connection
             ConnectionResultSet result = con.testConnection();
             if (result.wasSuccessful)
             {
+                this.UseWaitCursor = false;
                 MessageBox.Show("Connection Successful", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
+                this.UseWaitCursor = false;
                 MessageBox.Show("Connection failed: \n"+result.errorMessage, "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

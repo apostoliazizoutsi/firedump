@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,43 +15,58 @@ namespace Firedump.Forms.location
 {
     public partial class DropboxForm : Form
     {
-        //for test
-        private string myTestAccessToken = "";
-        private string appkey = "";
-        private string appsecret = "";
+        private string token = "";
 
         private LocationSwitchboard locswitch;
 
         private DropboxClient dbx;
-        private FullAccount full;
+        private FullAccount fullAccount;
         public DropboxForm(LocationSwitchboard locswitch)
         {
             InitializeComponent();
             this.locswitch = locswitch;
+            backgroundWorker1.DoWork += connect;
         }
 
 
-        private async void Run()
+        private async void connect(object sender, DoWorkEventArgs e) 
         {
-            //dbx = new DropboxClient(myTestAccessToken);
+            Thread.Sleep(2500);
+            dbx = new DropboxClient(token);
 
-            //full = await dbx.Users.GetCurrentAccountAsync();
-            //Console.WriteLine("{0} - {1}", full.Name.DisplayName, full.Email);
+            try {
+                fullAccount = await dbx.Users.GetCurrentAccountAsync();
+
+                
+                this.Invoke((MethodInvoker)delegate () {
+                    linfo.Text = "Name:" + fullAccount.Name.DisplayName + "  Email:" + fullAccount.Email;
+                    this.UseWaitCursor = false;
+                });
+
+            }
+            catch(Exception ex)
+            {
+                this.UseWaitCursor = false;
+                MessageBox.Show(ex.Message);
+            }     
         }
 
         private void bsaveconnect_Click(object sender, EventArgs e)
         {
-            string appkey = tbappkey.Text;
-            string appsecret = tbappsecret.Text;
-            string token = tbtoken.Text;
-
-            if (String.IsNullOrEmpty(appkey) || String.IsNullOrEmpty(appsecret) || String.IsNullOrEmpty(token))
+            if (String.IsNullOrEmpty(tbtoken.Text))
             {
-                MessageBox.Show("Must fill all fields, visit https://www.dropbox.com/developers/apps to get the credentials");
+                MessageBox.Show("Must fill token field, visit https://www.dropbox.com/developers/apps to create app and get the token");
                 return;
             }
 
-
+            if (!backgroundWorker1.IsBusy)
+            {
+                this.UseWaitCursor = true;
+                token = tbtoken.Text;
+                backgroundWorker1.RunWorkerAsync();
+            }
         }
+
+
     }
 }

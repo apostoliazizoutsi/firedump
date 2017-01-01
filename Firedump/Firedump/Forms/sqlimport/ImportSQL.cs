@@ -286,6 +286,7 @@ namespace Firedump.Forms.sqlimport
         {
             if (!performChecks()) return;
 
+            this.UseWaitCursor = true;
             bStartImport.Enabled = false;
 
             DataRow serverdata = firedumpdbDataSet.mysql_servers.Rows[cmbServers.SelectedIndex];
@@ -313,6 +314,7 @@ namespace Firedump.Forms.sqlimport
 
         private void bCancel_Click(object sender, EventArgs e)
         {
+            this.UseWaitCursor = false;
             if (adapter != null)
             {
                 adapter.cancel();
@@ -363,6 +365,7 @@ namespace Firedump.Forms.sqlimport
 
         private void onImportCompleteHandler(ImportResultSet result)
         {
+            this.UseWaitCursor = false;
             this.Invoke((MethodInvoker)delegate () {
                 pbMainProgress.Value = pbMainProgress.Maximum;
                 lStatus.Text = "Status: Complete";
@@ -429,6 +432,7 @@ namespace Firedump.Forms.sqlimport
 
         private void onImportErrorHandler(string message)
         {
+            this.UseWaitCursor = false;
             MessageBox.Show(message,"SQL import",MessageBoxButtons.OK,MessageBoxIcon.Error);
         }
 

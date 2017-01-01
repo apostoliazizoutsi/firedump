@@ -332,6 +332,7 @@ namespace Firedump.Forms.location
         {
             if (!performChecks(false))
                 return;
+            this.UseWaitCursor = true;
             FTPCredentialsConfig config = new FTPCredentialsConfig();
             config.host = tbHost.Text;
             config.port = Convert.ToInt32(tbPort.Text);
@@ -358,11 +359,13 @@ namespace Firedump.Forms.location
 
         private void onSaveErrorHandler(string message)
         {
+            this.UseWaitCursor = false;
             MessageBox.Show(message, "FTP test connection", MessageBoxButtons.OK, MessageBoxIcon.Stop);
         }
 
         private void onTestConnectionCompleteHandler(LocationConnectionResultSet result)
         {
+            this.UseWaitCursor = false;
             if (result.wasSuccessful)
             {
                 sshKeyFingerprint = result.sshHostKeyFingerprint;
