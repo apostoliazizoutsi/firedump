@@ -4,6 +4,10 @@
 
     partial class firedumpdbDataSet
     {
+        partial class backup_locationsDataTable
+        {
+        }
+
         partial class schedulesDataTable
         {
         }

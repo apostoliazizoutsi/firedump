@@ -73,7 +73,7 @@ namespace Firedump.models.location
             ((LocationFtp)this.location).config = config;
             ((LocationFtp)this.location).Progress += progressHandler;
         }
-        public void setCloudBoxLocation(LocationCredentialsConfig config)
+        public void setCloudBoxLocation(DropBoxCredentials config)
         {
             this.location = new LocationCloudBox();
             ((LocationCloudBox)this.location).config = config;

@@ -161,9 +161,9 @@ namespace Firedump.models.sqlimport
                             locationadapter.setFtpLocation(config);
                             break;
                         case 2: //Dropbox
-                            config = new LocationCredentialsConfig();
+                            DropBoxCredentials boxcreds = new DropBoxCredentials();
                             //EDW SETUP TO CONFIG
-                            locationadapter.setCloudBoxLocation(config);
+                            locationadapter.setCloudBoxLocation(boxcreds);
                             break;
                         case 3: //Google drive
                             config = new LocationCredentialsConfig();

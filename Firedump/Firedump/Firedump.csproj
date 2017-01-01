@@ -212,6 +212,7 @@
       <DependentUpon>ImportSQL.cs</DependentUpon>
     </Compile>
     <Compile Include="models\configuration\dynamicconfig\CompressionConfig.cs" />
+    <Compile Include="models\configuration\dynamicconfig\DropBoxCredentials.cs" />
     <Compile Include="models\configuration\dynamicconfig\DumpCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\FTPCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\ImportCredentialsConfig.cs" />

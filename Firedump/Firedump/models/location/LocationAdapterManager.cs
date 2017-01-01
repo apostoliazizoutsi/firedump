@@ -160,9 +160,14 @@ namespace Firedump.models.location
                     adapter.setFtpLocation(config);
                     break;
                 case 2: //Dropbox
-                    config = new LocationCredentialsConfig();
+                    DropBoxCredentials boxcreds = new DropBoxCredentials();
+                    boxcreds.Path = (string)data.Rows[0]["path"];
+                    boxcreds.Name = (string)data.Rows[0]["name"];
+                    boxcreds.FileName = (string)data.Rows[0]["filename"];
+                    boxcreds.Token = (string)data.Rows[0]["access_token"];
+                    boxcreds.LocalFilePath = sourcePath;
                     //EDW SETUP TO CONFIG
-                    adapter.setCloudBoxLocation(config);
+                    adapter.setCloudBoxLocation(boxcreds);
                     break;
                 case 3: //Google drive
                     config = new LocationCredentialsConfig();

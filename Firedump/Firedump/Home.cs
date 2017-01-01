@@ -522,7 +522,7 @@ namespace Firedump
             pbDumpExec?.Invoke((MethodInvoker)delegate () {
                 try
                 {
-                    pbDumpExec.Value = progress;
+                    pbDumpExec.Value = pbDumpExec.Maximum;
                 }
                 catch(ArgumentOutOfRangeException ex)
                 {
@@ -874,6 +874,12 @@ namespace Firedump
 
         private void onSaveCompleteHandler(List<LocationResultSet> results)
         {
+
+            pbDumpExec.Invoke((MethodInvoker)delegate ()
+            {
+                pbDumpExec.Value = pbDumpExec.Maximum;
+            });
+
             this.UseWaitCursor = false;
             lStatus?.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "Save complete!";

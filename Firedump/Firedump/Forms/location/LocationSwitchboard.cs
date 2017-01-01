@@ -194,6 +194,8 @@ namespace Firedump.Forms.location
                     ftploc.ShowDialog();
                     break;
                 case 2: //dropbox
+                    DropboxForm boxform = new DropboxForm(this,true,(firedumpdbDataSet.backup_locationsRow)row);
+                    boxform.Show();
                     break;
                 case 3: //google drive
                     break;

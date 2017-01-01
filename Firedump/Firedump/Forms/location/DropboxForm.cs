@@ -31,13 +31,35 @@ namespace Firedump.Forms.location
         private List<DropBoxItem> boxItems = new List<DropBoxItem>();
 
         private bool isEditor;
+        private firedumpdbDataSet.backup_locationsRow row;
 
-        public DropboxForm(LocationSwitchboard locswitch,bool isedit)
+        public DropboxForm(LocationSwitchboard locswitch,bool isedit, firedumpdbDataSet.backup_locationsRow row)
         {
             InitializeComponent();
             isEditor = isedit;
             this.locswitch = locswitch;
+            this.row = row;
+
+            Console.WriteLine(row.access_token);
+            tbtoken.Text = row.access_token;
+            tbfilename.Text = row.filename;
+            tbsavename.Text = row.name;
+            path = row.path;
             init();
+
+            if (String.IsNullOrEmpty(tbtoken.Text))
+            {
+                MessageBox.Show("Must fill token field, visit https://www.dropbox.com/developers/apps to create app and get the token");
+                return;
+            }
+            //save token
+
+            if (!backgroundWorker1.IsBusy)
+            {
+                this.UseWaitCursor = true;
+                token = tbtoken.Text;
+                backgroundWorker1.RunWorkerAsync();
+            }
         }
 
         public DropboxForm(LocationSwitchboard locswitch)
@@ -56,10 +78,8 @@ namespace Firedump.Forms.location
             smallimagelist.Images.Add(Bitmap.FromFile("resources\\icons\\folderimage.bmp"));
             smallimagelist.Images.Add(Bitmap.FromFile("resources\\icons\\fileimage.bmp"));
             listView1.SmallImageList = smallimagelist;
-
-            //temp
-            tbtoken.Text = "Qpt7zIZyk6AAAAAAAAACAZRqdAUcZGNFFlk0bZaREohmuFCBmo49A8ldxS-GF8oS";
         }
+
 
         private async void connect(object sender, DoWorkEventArgs e) 
         {
@@ -231,8 +251,9 @@ namespace Firedump.Forms.location
                 firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backup_adapter = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
                 if (isEditor)
                 {
-
-                } else
+                    backup_adapter.Update(tbsavename.Text, "", "", path, tbfilename.Text, (int)ServiceType.Type.DropBox, 0, "", "", "", "", "", "", "", 0, 0, tbtoken.Text, "", 0, "", 0,row.id);
+                }
+                else
                 {
                     backup_adapter.Insert(tbsavename.Text,"","",path,tbfilename.Text,(int)ServiceType.Type.DropBox,0,"","","","","","","",0,0,tbtoken.Text,"",0,"",0);
                 }
