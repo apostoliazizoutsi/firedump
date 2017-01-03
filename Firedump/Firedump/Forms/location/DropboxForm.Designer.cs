@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -40,16 +41,17 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.listView1 = new System.Windows.Forms.ListView();
             this.fileCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.sizecol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lfilename = new System.Windows.Forms.Label();
             this.tbfilename = new System.Windows.Forms.TextBox();
-            this.sizecol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
             this.btback = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
             this.btnsavelocation = new System.Windows.Forms.Button();
             this.tbsavename = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -67,6 +69,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dropbox user  Credentials";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(339, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(146, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "And create Full Dropbox App!";
             // 
             // label6
             // 
@@ -152,7 +163,7 @@
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(12, 139);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(638, 363);
+            this.listView1.Size = new System.Drawing.Size(679, 363);
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.TabIndex = 4;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -163,6 +174,10 @@
             // 
             this.fileCol.Text = "Name";
             this.fileCol.Width = 150;
+            // 
+            // sizecol
+            // 
+            this.sizecol.Text = "Size KB";
             // 
             // lfilename
             // 
@@ -179,10 +194,6 @@
             this.tbfilename.Name = "tbfilename";
             this.tbfilename.Size = new System.Drawing.Size(115, 20);
             this.tbfilename.TabIndex = 6;
-            // 
-            // sizecol
-            // 
-            this.sizecol.Text = "Size KB";
             // 
             // label1
             // 
@@ -204,15 +215,6 @@
             this.btback.Text = "home";
             this.btback.UseVisualStyleBackColor = true;
             this.btback.Click += new System.EventHandler(this.btback_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(339, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(146, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "And create Full Dropbox App!";
             // 
             // btnsavelocation
             // 
@@ -240,11 +242,22 @@
             this.label2.TabIndex = 15;
             this.label2.Text = "SaveName:";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Firedump.Properties.Resources.dropboxicon;
+            this.pictureBox1.Location = new System.Drawing.Point(656, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(45, 38);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
             // DropboxForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 511);
+            this.ClientSize = new System.Drawing.Size(703, 511);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbsavename);
             this.Controls.Add(this.btnsavelocation);
@@ -261,6 +274,7 @@
             this.Load += new System.EventHandler(this.DropboxForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,5 +303,6 @@
         private System.Windows.Forms.Button btnsavelocation;
         private System.Windows.Forms.TextBox tbsavename;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

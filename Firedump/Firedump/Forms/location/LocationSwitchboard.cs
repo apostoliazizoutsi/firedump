@@ -211,5 +211,35 @@ namespace Firedump.Forms.location
             DropboxForm boxform = new DropboxForm(this);
             boxform.Show();
         }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            FileSystem fs = new FileSystem(this);
+            fs.ShowDialog();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            DropboxForm boxform = new DropboxForm(this);
+            boxform.Show();
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            FTPLocation ftploc = new FTPLocation(this);
+            ftploc.ShowDialog();
+        }
+
+        private void bGoogleDrive_Click(object sender, EventArgs e)
+        {
+            GoogleDriveForm drive = new GoogleDriveForm();
+            drive.Show();
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            GoogleDriveForm drive = new GoogleDriveForm();
+            drive.Show();
+        }
     }
 }

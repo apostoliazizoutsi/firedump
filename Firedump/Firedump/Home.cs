@@ -19,6 +19,7 @@ using Firedump.Forms.location;
 using Firedump.models.location;
 using Firedump.Forms.sqlimport;
 using Firedump.Forms.schedule;
+using Firedump.Forms;
 
 namespace Firedump
 {
@@ -904,12 +905,16 @@ namespace Firedump
             });
             backuplocations = new List<firedumpdbDataSet.backup_locationsRow>();
 
+            firedumpdbDataSetTableAdapters.logsTableAdapter logAdapter = new firedumpdbDataSetTableAdapters.logsTableAdapter();
+
             if (koble)
             {
+                logAdapter.Insert(0,1, "Dump was completed successfully."+results.ToString(),DateTime.Now,0);
                 MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
+                logAdapter.Insert(0, 1, "Saving to " + errorcounter + " out of " + results.Count + " save location(s) failed:\n" + errorsToOutput, DateTime.Now, 1);
                 MessageBox.Show("Saving to "+errorcounter+" out of "+results.Count+" save location(s) failed:\n"+errorsToOutput, "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
@@ -1044,6 +1049,24 @@ namespace Firedump
         {
             SchedulerForm schedulerForm = new SchedulerForm();
             schedulerForm.Show();
+        }
+
+        private void show_logs_click(object sender, EventArgs e)
+        {
+            Logs logs = new Logs();
+            logs.Show();
+        }
+
+        private void about_form_click(object sender, EventArgs e)
+        {
+            AboutForm about = new AboutForm();
+            about.Show();
+        }
+
+        private void emailsetupformclick(object sender, EventArgs e)
+        {
+            EmailSchedule emailform = new EmailSchedule();
+            emailform.Show();
         }
     }
 }

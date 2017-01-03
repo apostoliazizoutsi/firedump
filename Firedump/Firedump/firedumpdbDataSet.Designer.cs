@@ -2340,7 +2340,6 @@ namespace Firedump {
                 this.columnid.AutoIncrementStep = -1;
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
-                this.columnserver_id.AllowDBNull = false;
                 this.columnname.MaxLength = 45;
                 this.columnhours.AllowDBNull = false;
                 this.columnminutes.AllowDBNull = false;
@@ -3820,7 +3819,12 @@ namespace Firedump {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public long server_id {
                 get {
-                    return ((long)(this[this.tableschedules.server_idColumn]));
+                    try {
+                        return ((long)(this[this.tableschedules.server_idColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'server_id\' in table \'schedules\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableschedules.server_idColumn] = value;
@@ -3960,6 +3964,18 @@ namespace Firedump {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_schedules_0_0"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isserver_idNull() {
+                return this.IsNull(this.tableschedules.server_idColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setserver_idNull() {
+                this[this.tableschedules.server_idColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8408,9 +8424,14 @@ WHERE        (id = @Original_id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(long Original_id, long Original_server_id, string Original_name, global::System.Nullable<global::System.DateTime> Original_date, global::System.Nullable<long> Original_activated, string Original_database, string Original_tables) {
+        public virtual int Delete(long Original_id, global::System.Nullable<long> Original_server_id, string Original_name, global::System.Nullable<global::System.DateTime> Original_date, global::System.Nullable<long> Original_activated, string Original_database, string Original_tables) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((long)(Original_id));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((long)(Original_server_id));
+            if ((Original_server_id.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((long)(Original_server_id.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
             if ((Original_name == null)) {
                 this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
@@ -8467,8 +8488,13 @@ WHERE        (id = @Original_id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(long server_id, string name, global::System.Nullable<global::System.DateTime> date, global::System.Nullable<long> activated, long hours, string database, string tables, long minutes, long seconds, long day) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((long)(server_id));
+        public virtual int Insert(global::System.Nullable<long> server_id, string name, global::System.Nullable<global::System.DateTime> date, global::System.Nullable<long> activated, long hours, string database, string tables, long minutes, long seconds, long day) {
+            if ((server_id.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[0].Value = ((long)(server_id.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             if ((name == null)) {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
@@ -8523,8 +8549,13 @@ WHERE        (id = @Original_id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(long server_id, string name, global::System.Nullable<global::System.DateTime> date, global::System.Nullable<long> activated, string database, string tables, long Original_id, long Original_server_id, string Original_name, global::System.Nullable<global::System.DateTime> Original_date, global::System.Nullable<long> Original_activated, string Original_database, string Original_tables) {
-            this.Adapter.UpdateCommand.Parameters[0].Value = ((long)(server_id));
+        public virtual int Update(global::System.Nullable<long> server_id, string name, global::System.Nullable<global::System.DateTime> date, global::System.Nullable<long> activated, string database, string tables, long Original_id, global::System.Nullable<long> Original_server_id, string Original_name, global::System.Nullable<global::System.DateTime> Original_date, global::System.Nullable<long> Original_activated, string Original_database, string Original_tables) {
+            if ((server_id.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((long)(server_id.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             if ((name == null)) {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
@@ -8556,7 +8587,12 @@ WHERE        (id = @Original_id)";
                 this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(tables));
             }
             this.Adapter.UpdateCommand.Parameters[6].Value = ((long)(Original_id));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((long)(Original_server_id));
+            if ((Original_server_id.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((long)(Original_server_id.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
             if ((Original_name == null)) {
                 this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
             }

@@ -35,27 +35,30 @@
             this.bnewjob = new System.Windows.Forms.Button();
             this.tvDatabases = new System.Windows.Forms.TreeView();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.activated = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.delete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.bapplychanges = new System.Windows.Forms.Button();
             this.schedulesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.firedumpdbDataSet = new Firedump.firedumpdbDataSet();
             this.schedulesTableAdapter = new Firedump.firedumpdbDataSetTableAdapters.schedulesTableAdapter();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.emailScheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serviceManager1 = new Firedump.usercontrols.ServiceManager();
-            this.activated = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.delete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.schedulesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox1.Controls.Add(this.serviceManager1);
-            this.groupBox1.Location = new System.Drawing.Point(479, 12);
+            this.groupBox1.Location = new System.Drawing.Point(479, 25);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(356, 240);
             this.groupBox1.TabIndex = 1;
@@ -69,9 +72,9 @@
             this.groupBox2.Controls.Add(this.tvDatabases);
             this.groupBox2.Controls.Add(this.dataGridView1);
             this.groupBox2.Controls.Add(this.dataGridView3);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Location = new System.Drawing.Point(12, 27);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(461, 525);
+            this.groupBox2.Size = new System.Drawing.Size(461, 510);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Schedules-Jobs";
@@ -117,6 +120,17 @@
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
+            // activated
+            // 
+            this.activated.HeaderText = "activated";
+            this.activated.Name = "activated";
+            // 
+            // delete
+            // 
+            this.delete.HeaderText = "delete";
+            this.delete.Name = "delete";
+            this.delete.Text = "delete";
+            // 
             // dataGridView3
             // 
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -150,23 +164,29 @@
             // 
             this.schedulesTableAdapter.ClearBeforeFill = true;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.emailScheduleToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(847, 24);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // emailScheduleToolStripMenuItem
+            // 
+            this.emailScheduleToolStripMenuItem.Name = "emailScheduleToolStripMenuItem";
+            this.emailScheduleToolStripMenuItem.Size = new System.Drawing.Size(99, 20);
+            this.emailScheduleToolStripMenuItem.Text = "Email Schedule";
+            this.emailScheduleToolStripMenuItem.Click += new System.EventHandler(this.emailScheduleToolStripMenuItem_Click);
+            // 
             // serviceManager1
             // 
             this.serviceManager1.Location = new System.Drawing.Point(6, 19);
             this.serviceManager1.Name = "serviceManager1";
             this.serviceManager1.Size = new System.Drawing.Size(356, 197);
             this.serviceManager1.TabIndex = 0;
-            // 
-            // activated
-            // 
-            this.activated.HeaderText = "activated";
-            this.activated.Name = "activated";
-            // 
-            // delete
-            // 
-            this.delete.HeaderText = "delete";
-            this.delete.Name = "delete";
-            this.delete.Text = "delete";
             // 
             // SchedulerForm
             // 
@@ -176,6 +196,8 @@
             this.Controls.Add(this.bapplychanges);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "SchedulerForm";
             this.Text = "SchedulerForm";
             this.Load += new System.EventHandler(this.SchedulerForm_Load);
@@ -185,7 +207,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.schedulesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -205,5 +230,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn activated;
         private System.Windows.Forms.DataGridViewButtonColumn delete;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem emailScheduleToolStripMenuItem;
     }
 }

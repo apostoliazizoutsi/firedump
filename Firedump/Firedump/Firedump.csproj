@@ -150,6 +150,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\location\DropboxForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -180,12 +186,30 @@
     <Compile Include="Forms\location\FTPLocation.Designer.cs">
       <DependentUpon>FTPLocation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\location\GoogleDriveForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\location\GoogleDriveForm.Designer.cs">
+      <DependentUpon>GoogleDriveForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\mysql\sqlviewer\IIntelliSense.cs" />
     <Compile Include="Forms\mysql\sqlviewer\IntelliSense.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\mysql\sqlviewer\IntelliSense.Designer.cs">
       <DependentUpon>IntelliSense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\schedule\EmailSchedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\schedule\EmailSchedule.Designer.cs">
+      <DependentUpon>EmailSchedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\schedule\Logs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\schedule\Logs.Designer.cs">
+      <DependentUpon>Logs.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\schedule\NewJobForm.cs">
       <SubType>Form</SubType>
@@ -378,6 +402,9 @@
     <Compile Include="models\databaseUtils\SqlUtils.cs" />
     <Compile Include="utils\OS.cs" />
     <Compile Include="utils\StringUtils.cs" />
+    <EmbeddedResource Include="Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\location\DropboxForm.resx">
       <DependentUpon>DropboxForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -393,6 +420,9 @@
     <EmbeddedResource Include="Forms\location\FTPLocation.resx">
       <DependentUpon>FTPLocation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\location\GoogleDriveForm.resx">
+      <DependentUpon>GoogleDriveForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\mysql\NewMySQLServer.resx">
       <DependentUpon>NewMySQLServer.cs</DependentUpon>
     </EmbeddedResource>
@@ -407,6 +437,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\mysql\sqlviewer\IntelliSense.resx">
       <DependentUpon>IntelliSense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\schedule\EmailSchedule.resx">
+      <DependentUpon>EmailSchedule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\schedule\Logs.resx">
+      <DependentUpon>Logs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\schedule\NewJobForm.resx">
       <DependentUpon>NewJobForm.cs</DependentUpon>
@@ -579,9 +615,14 @@
       <LastGenOutput>firedumpDataModel.cs</LastGenOutput>
     </Content>
     <None Include="resources\icons\Database-128.png" />
+    <None Include="resources\dropboxicon.png" />
+    <None Include="resources\ftpicon.png" />
+    <None Include="resources\googeldriveicon.png" />
+    <None Include="resources\emailicon.png" />
     <Content Include="resources\icons\databaseimage.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="resources\icons\delete_icon.png" />
     <Content Include="resources\icons\dropboximage.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -603,12 +644,17 @@
     <Content Include="resources\icons\redcircle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="resources\icons\s271qcbq.bmp" />
     <Content Include="resources\icons\tableimage.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\icons\thispc.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="resources\icons\deleteicon.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="resources\mycomputericon.png" />
     <Content Include="WinSCP.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

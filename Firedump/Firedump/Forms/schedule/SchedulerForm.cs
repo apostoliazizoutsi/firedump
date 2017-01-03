@@ -218,5 +218,11 @@ namespace Firedump.Forms.schedule
                 }
             }
         }
+
+        private void emailScheduleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EmailSchedule emailform = new EmailSchedule();
+            emailform.Show();
+        }
     }
 }

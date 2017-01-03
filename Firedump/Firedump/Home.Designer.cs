@@ -62,6 +62,9 @@
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cancel = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.historyLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.emailscheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -220,7 +223,9 @@
             this.optionsToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem,
-            this.schedulerToolStripMenuItem});
+            this.schedulerToolStripMenuItem,
+            this.historyLogsToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(662, 24);
@@ -236,7 +241,8 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miConfiguration});
+            this.miConfiguration,
+            this.emailscheduleToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -377,6 +383,27 @@
             this.cancel.Name = "cancel";
             this.cancel.Text = "cancel";
             // 
+            // historyLogsToolStripMenuItem
+            // 
+            this.historyLogsToolStripMenuItem.Name = "historyLogsToolStripMenuItem";
+            this.historyLogsToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.historyLogsToolStripMenuItem.Text = "History-Logs";
+            this.historyLogsToolStripMenuItem.Click += new System.EventHandler(this.show_logs_click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.about_form_click);
+            // 
+            // emailscheduleToolStripMenuItem
+            // 
+            this.emailscheduleToolStripMenuItem.Name = "emailscheduleToolStripMenuItem";
+            this.emailscheduleToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.emailscheduleToolStripMenuItem.Text = "email-schedule";
+            this.emailscheduleToolStripMenuItem.Click += new System.EventHandler(this.emailsetupformclick);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -444,5 +471,8 @@
         private System.Windows.Forms.ColumnHeader nameCol;
         private System.Windows.Forms.ColumnHeader pathCol;
         private System.Windows.Forms.ToolStripMenuItem schedulerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem historyLogsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem emailscheduleToolStripMenuItem;
     }
 }
