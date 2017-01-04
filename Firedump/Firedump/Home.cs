@@ -34,6 +34,7 @@ namespace Firedump
         private List<String> tableList = new List<string>();
         private bool hideSystemDatabases = true;
         private string locationName = "";
+        private LocationProgress locationProgress;
         //form instances
         private static GeneralConfiguration genConfig;
         private GeneralConfiguration getGenConfigInstance()
@@ -662,6 +663,7 @@ namespace Firedump
                         dataGridView1.Refresh();
                     });
 
+                    
                     lbSaveLocations.Invoke((MethodInvoker)delegate ()
                     {
                         foreach (ListViewItem item in lbSaveLocations.Items)
@@ -672,7 +674,7 @@ namespace Firedump
                             addToGridView(loc);
                         }
                     });
-                    
+
                     
 
                     adapterLocation = new LocationAdapterManager(locations,status.fileAbsPath);

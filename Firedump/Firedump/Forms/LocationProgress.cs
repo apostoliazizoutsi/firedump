@@ -16,5 +16,28 @@ namespace Firedump.Forms
         {
             InitializeComponent();
         }
+
+        private void init()
+        {
+
+        }
+
+        public void updateGridview(int progress)
+        {
+
+        }
+
+        public void setDataGridview(DataGridView dgv)
+        {
+            this.dataGridView1 = dgv;
+        }
+
+        //close button
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+
     }
 }
