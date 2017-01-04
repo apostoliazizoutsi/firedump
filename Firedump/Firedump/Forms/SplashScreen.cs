@@ -31,15 +31,43 @@ namespace Firedump.Forms
 
         async void increaseProgressBar()
         {
+            string basestatus = "Initializing...";
             for (int i = 0; i <= progressBar1.Maximum; i++)
-            {
-                Thread.Sleep(25);
+            {               
                 this.Invoke((MethodInvoker)delegate ()
                 {
+                    if (i == 0)
+                        lstatus.Text = basestatus;
+                    if (i == 25)
+                        lstatus.Text = basestatus + "configuration settings";
+                    if (i == 75)
+                        lstatus.Text = basestatus + "Home UI Form";
+
                     progressBar1.Value = i;
                 });
-                   
+                Thread.Sleep(25);
             }
+
+            lstatus.Invoke((MethodInvoker)delegate ()
+            {
+                lstatus.Text = basestatus + "Done! Launching Home Form";
+            });
+
+            Thread.Sleep(100);
+            //hide the splashscreen
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                this.Hide();
+            });
+
+            //start home
+            Application.Run(new Home());
+
+            //when home closes , dispose all
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                this.Dispose();
+            });            
         }
     }
 }

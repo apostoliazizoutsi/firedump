@@ -12,6 +12,7 @@ using Topshelf;
 using Firedump.service;
 using System.Threading;
 using Topshelf.ServiceConfigurators;
+using Firedump.Forms;
 
 namespace Firedump
 {
@@ -38,7 +39,8 @@ namespace Firedump
 
                 //configuration initialization
                 ConfigurationManager.getInstance().initializeConfig();
-                Application.Run(new MainForm());
+                Application.Run(new SplashScreen());
+
             } else
             {                
                 thread = new Thread(new ThreadStart(service));

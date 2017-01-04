@@ -156,6 +156,12 @@
     <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LocationProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LocationProgress.Designer.cs">
+      <DependentUpon>LocationProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\location\DropboxForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -404,6 +410,9 @@
     <Compile Include="utils\StringUtils.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LocationProgress.resx">
+      <DependentUpon>LocationProgress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\location\DropboxForm.resx">
       <DependentUpon>DropboxForm.cs</DependentUpon>

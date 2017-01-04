@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.serviceManager1 = new Firedump.usercontrols.ServiceManager();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.bnewjob = new System.Windows.Forms.Button();
@@ -44,7 +45,6 @@
             this.schedulesTableAdapter = new Firedump.firedumpdbDataSetTableAdapters.schedulesTableAdapter();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.emailScheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.serviceManager1 = new Firedump.usercontrols.ServiceManager();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -64,6 +64,13 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Service Manager";
+            // 
+            // serviceManager1
+            // 
+            this.serviceManager1.Location = new System.Drawing.Point(6, 19);
+            this.serviceManager1.Name = "serviceManager1";
+            this.serviceManager1.Size = new System.Drawing.Size(356, 197);
+            this.serviceManager1.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -180,13 +187,6 @@
             this.emailScheduleToolStripMenuItem.Size = new System.Drawing.Size(99, 20);
             this.emailScheduleToolStripMenuItem.Text = "Email Schedule";
             this.emailScheduleToolStripMenuItem.Click += new System.EventHandler(this.emailScheduleToolStripMenuItem_Click);
-            // 
-            // serviceManager1
-            // 
-            this.serviceManager1.Location = new System.Drawing.Point(6, 19);
-            this.serviceManager1.Name = "serviceManager1";
-            this.serviceManager1.Size = new System.Drawing.Size(356, 197);
-            this.serviceManager1.TabIndex = 0;
             // 
             // SchedulerForm
             // 
