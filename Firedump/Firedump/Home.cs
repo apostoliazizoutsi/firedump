@@ -34,7 +34,7 @@ namespace Firedump
         private List<String> tableList = new List<string>();
         private bool hideSystemDatabases = true;
         private string locationName = "";
-        private LocationProgress locationProgress;
+        private ProgressFormContainer progressContainer;
         //form instances
         private static GeneralConfiguration genConfig;
         private GeneralConfiguration getGenConfigInstance()
@@ -50,8 +50,9 @@ namespace Firedump
         {
             InitializeComponent();       
             adapter = new MySqlDumpAdapter();
+            
         }
-        
+
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
@@ -663,9 +664,13 @@ namespace Firedump
                         dataGridView1.Refresh();
                     });
 
+
+                   
                     
-                    lbSaveLocations.Invoke((MethodInvoker)delegate ()
+                    this.Invoke((MethodInvoker)delegate ()
                     {
+                        progressContainer = new ProgressFormContainer();
+                        progressContainer.Show();
                         foreach (ListViewItem item in lbSaveLocations.Items)
                         {
                             Object loc = item.Tag;
@@ -673,8 +678,8 @@ namespace Firedump
                             backuplocations.Add((firedumpdbDataSet.backup_locationsRow)loc);
                             addToGridView(loc);
                         }
+                        
                     });
-
                     
 
                     adapterLocation = new LocationAdapterManager(locations,status.fileAbsPath);
@@ -1019,7 +1024,13 @@ namespace Firedump
 
 
         private void addToGridView(object tag)
-        {
+        {           
+            if (progressContainer != null && progressContainer.Visible)
+            {
+                progressContainer.addProgress(tag);
+            }
+           
+            /*
             DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[0].Clone();
             dataRow.Tag = tag;
             firedumpdbDataSet.backup_locationsRow row = (firedumpdbDataSet.backup_locationsRow)tag;
@@ -1028,11 +1039,21 @@ namespace Firedump
             {
                 dataGridView1.Rows.Add(dataRow);
             });
-            
+            */
+
         }
 
         private void updateGridView(int progress)
         {
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                if (progressContainer != null && progressContainer.Visible)
+                {
+                    progressContainer.updateProgress(progress, locationName);
+                }
+            });
+            
+            /*
             for(int i =0; i < dataGridView1.RowCount; i++)
             {
                 firedumpdbDataSet.backup_locationsRow row = (firedumpdbDataSet.backup_locationsRow) dataGridView1.Rows[i].Tag;
@@ -1045,6 +1066,7 @@ namespace Firedump
                     break;
                 }
             }
+            */
         }
 
         private void schedulerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1069,6 +1091,21 @@ namespace Firedump
         {
             EmailSchedule emailform = new EmailSchedule();
             emailform.Show();
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProgressFormContainer form = new ProgressFormContainer();
+            form.Show();
+        }
+
+        private void bshowuploads_Click(object sender, EventArgs e)
+        {
+            if(progressContainer != null)
+            {
+                progressContainer.Visible = true;
+                progressContainer.Show();
+            }
         }
     }
 }

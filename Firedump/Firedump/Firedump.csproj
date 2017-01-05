@@ -156,11 +156,11 @@
     <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LocationProgress.cs">
+    <Compile Include="Forms\ProgressFormContainer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LocationProgress.Designer.cs">
-      <DependentUpon>LocationProgress.cs</DependentUpon>
+    <Compile Include="Forms\ProgressFormContainer.Designer.cs">
+      <DependentUpon>ProgressFormContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\location\DropboxForm.cs">
       <SubType>Form</SubType>
@@ -402,6 +402,18 @@
     <Compile Include="usercontrols\ServiceManager.Designer.cs">
       <DependentUpon>ServiceManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="usercontrols\ProgressContrainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usercontrols\ProgressContrainer.Designer.cs">
+      <DependentUpon>ProgressContrainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="usercontrols\ProgressItemLoc.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usercontrols\ProgressItemLoc.Designer.cs">
+      <DependentUpon>ProgressItemLoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="userinfo.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
@@ -411,8 +423,8 @@
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LocationProgress.resx">
-      <DependentUpon>LocationProgress.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ProgressFormContainer.resx">
+      <DependentUpon>ProgressFormContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\location\DropboxForm.resx">
       <DependentUpon>DropboxForm.cs</DependentUpon>
@@ -501,6 +513,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="usercontrols\ServiceManager.resx">
       <DependentUpon>ServiceManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usercontrols\ProgressContrainer.resx">
+      <DependentUpon>ProgressContrainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usercontrols\ProgressItemLoc.resx">
+      <DependentUpon>ProgressItemLoc.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="firedumpdbDataSet.xsc">
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>

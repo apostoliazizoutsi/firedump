@@ -46,10 +46,13 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miConfiguration = new System.Windows.Forms.ToolStripMenuItem();
+            this.emailscheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importSQLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.schedulerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.historyLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bStartDump = new System.Windows.Forms.Button();
             this.pbDumpExec = new System.Windows.Forms.ProgressBar();
             this.lStatusLabel = new System.Windows.Forms.Label();
@@ -62,9 +65,7 @@
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cancel = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.historyLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.emailscheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bshowuploads = new System.Windows.Forms.Button();
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -228,7 +229,7 @@
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(662, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(658, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -253,6 +254,13 @@
             this.miConfiguration.Size = new System.Drawing.Size(157, 22);
             this.miConfiguration.Text = "Configuration...";
             this.miConfiguration.Click += new System.EventHandler(this.miConfiguration_Click);
+            // 
+            // emailscheduleToolStripMenuItem
+            // 
+            this.emailscheduleToolStripMenuItem.Name = "emailscheduleToolStripMenuItem";
+            this.emailscheduleToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.emailscheduleToolStripMenuItem.Text = "email-schedule";
+            this.emailscheduleToolStripMenuItem.Click += new System.EventHandler(this.emailsetupformclick);
             // 
             // toolsToolStripMenuItem
             // 
@@ -281,6 +289,20 @@
             this.schedulerToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.schedulerToolStripMenuItem.Text = "Scheduler";
             this.schedulerToolStripMenuItem.Click += new System.EventHandler(this.schedulerToolStripMenuItem_Click);
+            // 
+            // historyLogsToolStripMenuItem
+            // 
+            this.historyLogsToolStripMenuItem.Name = "historyLogsToolStripMenuItem";
+            this.historyLogsToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.historyLogsToolStripMenuItem.Text = "History-Logs";
+            this.historyLogsToolStripMenuItem.Click += new System.EventHandler(this.show_logs_click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.about_form_click);
             // 
             // bStartDump
             // 
@@ -383,32 +405,22 @@
             this.cancel.Name = "cancel";
             this.cancel.Text = "cancel";
             // 
-            // historyLogsToolStripMenuItem
+            // bshowuploads
             // 
-            this.historyLogsToolStripMenuItem.Name = "historyLogsToolStripMenuItem";
-            this.historyLogsToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
-            this.historyLogsToolStripMenuItem.Text = "History-Logs";
-            this.historyLogsToolStripMenuItem.Click += new System.EventHandler(this.show_logs_click);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.about_form_click);
-            // 
-            // emailscheduleToolStripMenuItem
-            // 
-            this.emailscheduleToolStripMenuItem.Name = "emailscheduleToolStripMenuItem";
-            this.emailscheduleToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.emailscheduleToolStripMenuItem.Text = "email-schedule";
-            this.emailscheduleToolStripMenuItem.Click += new System.EventHandler(this.emailsetupformclick);
+            this.bshowuploads.Location = new System.Drawing.Point(515, 345);
+            this.bshowuploads.Name = "bshowuploads";
+            this.bshowuploads.Size = new System.Drawing.Size(131, 23);
+            this.bshowuploads.TabIndex = 13;
+            this.bshowuploads.Text = "Show uploads status";
+            this.bshowuploads.UseVisualStyleBackColor = true;
+            this.bshowuploads.Click += new System.EventHandler(this.bshowuploads_Click);
             // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(662, 505);
+            this.ClientSize = new System.Drawing.Size(658, 505);
+            this.Controls.Add(this.bshowuploads);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.bcancel);
@@ -474,5 +486,6 @@
         private System.Windows.Forms.ToolStripMenuItem historyLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem emailscheduleToolStripMenuItem;
+        private System.Windows.Forms.Button bshowuploads;
     }
 }
