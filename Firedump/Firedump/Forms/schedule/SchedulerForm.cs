@@ -208,11 +208,11 @@ namespace Firedump.Forms.schedule
                 {
                    if(scheduleId != -1)
                     {
-                        DialogResult result = MessageBox.Show("Are you sure you want to delete this Job and its locations?", "Delete Schedule-Job", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        DialogResult result = MessageBox.Show("Are you sure you want to delete this Job?", "Delete Schedule-Job", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (result == DialogResult.Yes)
-                        {                          
-                            //delete savelocations
-                            //and finally delete from schedule
+                        {
+                            //delete from userinfo, schedule_save_location and logs first
+                            //schedulesTableAdapter.DeleteQueryById(scheduleId);
                         }
                     }
                 }
