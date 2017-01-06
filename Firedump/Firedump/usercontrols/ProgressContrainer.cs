@@ -30,7 +30,7 @@ namespace Firedump.usercontrols
                 progItemloc.setLabelText(row.name);
                 progItemloc.Pos = pos;
                 progItemloc.Location = new Point(0, heigth);
-                heigth += 35;
+                heigth += 30;
                 pos++;
                 panel1.Controls.Add(progItemloc);
                   

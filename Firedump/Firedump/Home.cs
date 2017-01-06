@@ -663,9 +663,6 @@ namespace Firedump
                         dataGridView1.Rows.Clear();
                         dataGridView1.Refresh();
                     });
-
-
-                   
                     
                     this.Invoke((MethodInvoker)delegate ()
                     {
@@ -691,9 +688,7 @@ namespace Firedump
                     adapterLocation.SaveError += onSaveErrorHandler;
                     adapterLocation.setProgress();
                     
-                    
                     adapterLocation.startSave();
-                    //MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -1101,7 +1096,7 @@ namespace Firedump
 
         private void bshowuploads_Click(object sender, EventArgs e)
         {
-            if(progressContainer != null)
+            if(progressContainer != null && !progressContainer.IsDisposed)
             {
                 progressContainer.Visible = true;
                 progressContainer.Show();
