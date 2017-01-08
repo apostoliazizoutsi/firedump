@@ -17,6 +17,8 @@ namespace Firedump.Forms.schedule
         public delegate void onSetJobDetails(JobDetail jobDetail);
         public event onSetJobDetails setJobDetails;
         private List<string> tables;
+        private firedumpdbDataSet.backup_locationsDataTable loctable;
+
         private bool IsInit { get; set; }
         private void OnSetJobDetails(JobDetail jobDetail)
         {
@@ -31,9 +33,19 @@ namespace Firedump.Forms.schedule
             InitializeComponent();
             backgroundWorker1.DoWork += fillDatabaseCmb;
             IsInit = true;
-            loadComboBoxServers();            
+            loadComboBoxServers();
+            loadlocationsCombobox();      
         }
 
+        private void loadlocationsCombobox()
+        {
+            firedumpdbDataSetTableAdapters.backup_locationsTableAdapter locAdapter = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
+            loctable = new firedumpdbDataSet.backup_locationsDataTable();
+            locAdapter.Fill(loctable);
+            cblocation.DataSource = loctable;
+            cblocation.DisplayMember = "name";
+            cblocation.ValueMember = "id";        
+        }
 
         private void loadComboBoxServers()
         {
@@ -62,6 +74,12 @@ namespace Firedump.Forms.schedule
                 return;
             }
 
+            if(cblocation.Items.Count == -1)
+            {
+                MessageBox.Show("No destination location set!");
+                return;
+            }
+
             int day = (int)numericDay.Value;
             int hour = (int)numericHour.Value;
             int minute = (int)numericMinute.Value;
@@ -76,12 +94,16 @@ namespace Firedump.Forms.schedule
             con.port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
             con.username = (string)serverData.Rows[cmbServers.SelectedIndex]["username"];
             con.password = (string)serverData.Rows[cmbServers.SelectedIndex]["password"];
+            
 
             try {
                 if (con.testConnection().wasSuccessful)
                 {
                     tables = con.getTables(cmbdatabase.SelectedItem.ToString());
+                    string locname = (string)loctable.Rows[cblocation.SelectedIndex]["name"];
+                    int id = int.Parse(loctable.Rows[cblocation.SelectedIndex]["id"].ToString());
 
+                    
                     JobDetail jobdetails = new JobDetail();
                     jobdetails.DayOfWeek = day;
                     jobdetails.Hour = hour;
@@ -90,9 +112,12 @@ namespace Firedump.Forms.schedule
                     jobdetails.Database = cmbdatabase.SelectedItem.ToString();
                     jobdetails.Tables = tables;
                     jobdetails.Server = (firedumpdbDataSet.mysql_serversRow)serverData.Rows[cmbServers.SelectedIndex];
+                    jobdetails.LocationId = id;
+                    jobdetails.LocationName = locname;
 
                     OnSetJobDetails(jobdetails);
                     this.Close();
+                    
                 } else
                 {
                     MessageBox.Show("Error connection to server");

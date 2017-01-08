@@ -29,5 +29,9 @@ namespace Firedump.models.pojos
 
         public object Tag { get; set; }
 
+        public string LocationName { get; set; }
+
+        public int LocationId { get; set; }
+
     }
 }

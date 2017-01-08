@@ -106,9 +106,16 @@ namespace Firedump.Forms.schedule
             firedumpdbDataSet.schedulesDataTable scheduleTable = new firedumpdbDataSet.schedulesDataTable();
             scheduleAdapter.FillOrderByDate(scheduleTable);
 
-            Console.WriteLine("day:"+scheduleTable[1].day);
-            dataGridView1.DataSource = scheduleTable;
             
+            //Console.WriteLine("day:"+scheduleTable[1].day);
+            dataGridView1.DataSource = scheduleTable;
+
+            scheduleAdapter.FillIdByName(scheduleTable,jobDetails.Name);
+            int scheduleId = (int)scheduleTable[0].id;
+            int locId = jobDetails.LocationId;
+
+            firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter savelocAdapter = new firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter();
+            savelocAdapter.Insert(scheduleId, locId);
         }
 
 

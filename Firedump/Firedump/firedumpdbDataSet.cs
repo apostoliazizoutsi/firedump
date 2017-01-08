@@ -18,9 +18,12 @@
     }
 }
 
-namespace Firedump.firedumpdbDataSetTableAdapters {
-    
-    
+namespace Firedump.firedumpdbDataSetTableAdapters
+{
+    partial class schedulesTableAdapter
+    {
+    }
+
     public partial class mysql_serversTableAdapter {
     }
 }

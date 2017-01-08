@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbchoosealldatabases = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbdatabase = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,7 +45,8 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.label6 = new System.Windows.Forms.Label();
             this.tbjobname = new System.Windows.Forms.TextBox();
-            this.cbchoosealldatabases = new System.Windows.Forms.CheckBox();
+            this.cblocation = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericMinute)).BeginInit();
@@ -54,6 +56,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.cblocation);
             this.groupBox1.Controls.Add(this.cbchoosealldatabases);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.cmbdatabase);
@@ -61,15 +65,25 @@
             this.groupBox1.Controls.Add(this.cmbServers);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(325, 99);
+            this.groupBox1.Size = new System.Drawing.Size(431, 99);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Choose Server";
             // 
+            // cbchoosealldatabases
+            // 
+            this.cbchoosealldatabases.AutoSize = true;
+            this.cbchoosealldatabases.Location = new System.Drawing.Point(145, 68);
+            this.cbchoosealldatabases.Name = "cbchoosealldatabases";
+            this.cbchoosealldatabases.Size = new System.Drawing.Size(88, 17);
+            this.cbchoosealldatabases.TabIndex = 8;
+            this.cbchoosealldatabases.Text = "all databases";
+            this.cbchoosealldatabases.UseVisualStyleBackColor = true;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(147, 25);
+            this.label2.Location = new System.Drawing.Point(142, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 7;
@@ -79,7 +93,7 @@
             // 
             this.cmbdatabase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbdatabase.FormattingEnabled = true;
-            this.cmbdatabase.Location = new System.Drawing.Point(150, 41);
+            this.cmbdatabase.Location = new System.Drawing.Point(145, 41);
             this.cmbdatabase.Name = "cmbdatabase";
             this.cmbdatabase.Size = new System.Drawing.Size(130, 21);
             this.cmbdatabase.TabIndex = 6;
@@ -113,7 +127,7 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Location = new System.Drawing.Point(11, 117);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(325, 91);
+            this.groupBox2.Size = new System.Drawing.Size(432, 91);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Choose Date";
@@ -208,7 +222,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(261, 214);
+            this.button1.Location = new System.Drawing.Point(368, 214);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -232,21 +246,29 @@
             this.tbjobname.Size = new System.Drawing.Size(187, 20);
             this.tbjobname.TabIndex = 4;
             // 
-            // cbchoosealldatabases
+            // cblocation
             // 
-            this.cbchoosealldatabases.AutoSize = true;
-            this.cbchoosealldatabases.Location = new System.Drawing.Point(150, 69);
-            this.cbchoosealldatabases.Name = "cbchoosealldatabases";
-            this.cbchoosealldatabases.Size = new System.Drawing.Size(88, 17);
-            this.cbchoosealldatabases.TabIndex = 8;
-            this.cbchoosealldatabases.Text = "all databases";
-            this.cbchoosealldatabases.UseVisualStyleBackColor = true;
+            this.cblocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cblocation.FormattingEnabled = true;
+            this.cblocation.Location = new System.Drawing.Point(281, 41);
+            this.cblocation.Name = "cblocation";
+            this.cblocation.Size = new System.Drawing.Size(130, 21);
+            this.cblocation.TabIndex = 9;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(278, 25);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Location";
             // 
             // NewJobForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(346, 248);
+            this.ClientSize = new System.Drawing.Size(452, 248);
             this.Controls.Add(this.tbjobname);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button1);
@@ -285,5 +307,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tbjobname;
         private System.Windows.Forms.CheckBox cbchoosealldatabases;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cblocation;
     }
 }
