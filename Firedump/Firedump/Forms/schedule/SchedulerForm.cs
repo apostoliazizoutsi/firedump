@@ -35,7 +35,6 @@ namespace Firedump.Forms.schedule
 
         private void SchedulerForm_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'firedumpdbDataSet.schedules' table. You can move, or remove it, as needed.
             //this.schedulesTableAdapter.Fill(this.firedumpdbDataSet.schedules);
             ServiceController sc = serviceManager1.GetServiceStatus();
             if(sc == null)
@@ -116,6 +115,11 @@ namespace Firedump.Forms.schedule
 
             firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter savelocAdapter = new firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter();
             savelocAdapter.Insert(scheduleId, locId);
+
+            firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backAdapter = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
+            firedumpdbDataSet.backup_locationsDataTable backuptable = new firedumpdbDataSet.backup_locationsDataTable();
+            backuptable = backAdapter.GetDataByID(locId);
+            dataGridViewlocs.DataSource = backuptable;
         }
 
 
@@ -221,6 +225,27 @@ namespace Firedump.Forms.schedule
                             //delete from userinfo, schedule_save_location and logs first
                             //schedulesTableAdapter.DeleteQueryById(scheduleId);
                         }
+                    } 
+                }
+            } else
+            {
+                int scheduleId = 0;
+                if (int.TryParse(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString(), out scheduleId))
+                {
+                    if (scheduleId != -1)
+                    {
+                        firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter savelocAdapter = new firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter();
+                        firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backAdapter = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
+                        firedumpdbDataSet.schedule_save_locationsDataTable saveloctable = new firedumpdbDataSet.schedule_save_locationsDataTable();
+                        savelocAdapter.FillByScheduleId(saveloctable, scheduleId);
+                        firedumpdbDataSet.backup_locationsDataTable backuptable = new firedumpdbDataSet.backup_locationsDataTable();
+                        if(saveloctable.Count > 0)
+                        {
+                            backuptable = backAdapter.GetDataByID(saveloctable[0].backup_location_id);
+                            dataGridViewlocs.DataSource = backuptable;
+                        }
+                        //MessageBox.Show(scheduleId+" "+saveloctable.Count.ToString());
+
                     }
                 }
             }

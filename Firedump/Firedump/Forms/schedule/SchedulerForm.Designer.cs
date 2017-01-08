@@ -112,7 +112,7 @@
             this.delete});
             this.dataGridView1.Location = new System.Drawing.Point(6, 52);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(449, 248);
+            this.dataGridView1.Size = new System.Drawing.Size(449, 337);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
@@ -173,9 +173,9 @@
             // dataGridViewlocs
             // 
             this.dataGridViewlocs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewlocs.Location = new System.Drawing.Point(6, 306);
+            this.dataGridViewlocs.Location = new System.Drawing.Point(6, 395);
             this.dataGridViewlocs.Name = "dataGridViewlocs";
-            this.dataGridViewlocs.Size = new System.Drawing.Size(449, 198);
+            this.dataGridViewlocs.Size = new System.Drawing.Size(449, 109);
             this.dataGridViewlocs.TabIndex = 8;
             // 
             // SchedulerForm

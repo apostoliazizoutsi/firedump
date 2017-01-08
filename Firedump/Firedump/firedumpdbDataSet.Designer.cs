@@ -7703,23 +7703,35 @@ WHERE        (id = @Original_id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[2];
+            this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[3];
             this._commandCollection[0] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT id, schedule_id, backup_location_id FROM schedule_save_locations";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT id, schedule_id, backup_location_id FROM schedule_save_locations\r\nWHERE sc" +
-                "hedule_id = @schedule_id";
+            this._commandCollection[1].CommandText = "SELECT id, schedule_id, backup_location_id FROM schedule_save_locations\r\nWHERE ba" +
+                "ckup_location_id = @backuplocId";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             global::System.Data.SQLite.SQLiteParameter param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@backuplocId";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
+            param.SourceColumn = "backup_location_id";
+            this._commandCollection[1].Parameters.Add(param);
+            this._commandCollection[2] = new global::System.Data.SQLite.SQLiteCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "SELECT id, schedule_id, backup_location_id FROM schedule_save_locations\r\nWHERE sc" +
+                "hedule_id = @schedule_id";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@schedule_id";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
             param.Size = 8;
             param.SourceColumn = "schedule_id";
-            this._commandCollection[1].Parameters.Add(param);
+            this._commandCollection[2].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7750,8 +7762,44 @@ WHERE        (id = @Original_id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByScheduleId(firedumpdbDataSet.schedule_save_locationsDataTable dataTable, global::System.Nullable<long> schedule_id) {
+        public virtual int FillByBackuplocId(firedumpdbDataSet.schedule_save_locationsDataTable dataTable, global::System.Nullable<long> backuplocId) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((backuplocId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((long)(backuplocId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual firedumpdbDataSet.schedule_save_locationsDataTable GetDataByBackUplocId(global::System.Nullable<long> backuplocId) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((backuplocId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((long)(backuplocId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            firedumpdbDataSet.schedule_save_locationsDataTable dataTable = new firedumpdbDataSet.schedule_save_locationsDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByScheduleId(firedumpdbDataSet.schedule_save_locationsDataTable dataTable, global::System.Nullable<long> schedule_id) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
             if ((schedule_id.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[0].Value = ((long)(schedule_id.Value));
             }
@@ -7770,7 +7818,7 @@ WHERE        (id = @Original_id)";
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual firedumpdbDataSet.schedule_save_locationsDataTable GetDataByScheduleId(global::System.Nullable<long> schedule_id) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand = this.CommandCollection[2];
             if ((schedule_id.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[0].Value = ((long)(schedule_id.Value));
             }

@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cblocation = new System.Windows.Forms.ComboBox();
             this.cbchoosealldatabases = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbdatabase = new System.Windows.Forms.ComboBox();
@@ -45,8 +47,6 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.label6 = new System.Windows.Forms.Label();
             this.tbjobname = new System.Windows.Forms.TextBox();
-            this.cblocation = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericMinute)).BeginInit();
@@ -69,6 +69,24 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Choose Server";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(278, 25);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Location";
+            // 
+            // cblocation
+            // 
+            this.cblocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cblocation.FormattingEnabled = true;
+            this.cblocation.Location = new System.Drawing.Point(281, 41);
+            this.cblocation.Name = "cblocation";
+            this.cblocation.Size = new System.Drawing.Size(130, 21);
+            this.cblocation.TabIndex = 9;
             // 
             // cbchoosealldatabases
             // 
@@ -167,7 +185,7 @@
             // 
             this.numericHour.Location = new System.Drawing.Point(113, 36);
             this.numericHour.Maximum = new decimal(new int[] {
-            24,
+            23,
             0,
             0,
             0});
@@ -245,24 +263,6 @@
             this.tbjobname.Name = "tbjobname";
             this.tbjobname.Size = new System.Drawing.Size(187, 20);
             this.tbjobname.TabIndex = 4;
-            // 
-            // cblocation
-            // 
-            this.cblocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cblocation.FormattingEnabled = true;
-            this.cblocation.Location = new System.Drawing.Point(281, 41);
-            this.cblocation.Name = "cblocation";
-            this.cblocation.Size = new System.Drawing.Size(130, 21);
-            this.cblocation.TabIndex = 9;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(278, 25);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(48, 13);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Location";
             // 
             // NewJobForm
             // 

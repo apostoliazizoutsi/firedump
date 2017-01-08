@@ -45,6 +45,10 @@ namespace Firedump.Forms.schedule
             cblocation.DataSource = loctable;
             cblocation.DisplayMember = "name";
             cblocation.ValueMember = "id";        
+            if(cblocation.Items.Count > 0)
+            {
+                cblocation.SelectedIndex = 0;
+            }
         }
 
         private void loadComboBoxServers()
@@ -65,6 +69,7 @@ namespace Firedump.Forms.schedule
 
         private void setjobclick(object sender, EventArgs e)
         {
+            
             //validate inputs
             //check if other schedule is in same minute.
             string jobname = tbjobname.Text;
@@ -74,7 +79,7 @@ namespace Firedump.Forms.schedule
                 return;
             }
 
-            if(cblocation.Items.Count == -1)
+            if(cblocation.Items.Count <= 0)
             {
                 MessageBox.Show("No destination location set!");
                 return;
