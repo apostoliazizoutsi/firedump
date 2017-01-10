@@ -59,15 +59,15 @@ namespace Firedump.Forms
             {
                 this.Hide();
             });
-
-            //start home
-            Application.Run(new Home());
-
+            
             //when home closes , dispose all
             this.Invoke((MethodInvoker)delegate ()
             {
                 this.Dispose();
             });            
         }
+
+
+       
     }
 }

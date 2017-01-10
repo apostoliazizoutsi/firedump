@@ -7,6 +7,7 @@ using Firedump.models.dump;
 using System.Collections.Generic;
 using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.databaseUtils;
+using System.IO;
 
 namespace Firedump.models.dump
 {
@@ -111,7 +112,6 @@ namespace Firedump.models.dump
 
             Task mysqldumpTask = new Task(DumpMysqlTaskExecutor);
             mysqldumpTask.Start();
-            
         }
         
        
@@ -128,12 +128,11 @@ namespace Firedump.models.dump
             List<string> tables = await testConnectionTask;
             if (tables != null)
             {
-
                 onProgress("connected");
                 onInitDumpTables(tables);
-
-
+                
                 mydump = new MysqlDump();
+               
                 mydump.credentialsConfigInstance = credentialsConfigInstance;
                 mydump.CompressProgress += onCompressProgressHandler;
                 mydump.CompressStart += onCompressStartHandler;

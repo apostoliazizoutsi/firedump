@@ -20,6 +20,10 @@
 
 namespace Firedump.firedumpdbDataSetTableAdapters
 {
+    partial class schedule_save_locationsTableAdapter
+    {
+    }
+
     partial class schedulesTableAdapter
     {
     }

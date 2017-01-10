@@ -41,6 +41,8 @@ namespace Firedump
                 ConfigurationManager.getInstance().initializeConfig();
                 Application.Run(new SplashScreen());
 
+                //start home
+                Application.Run(new Home());
             } else
             {                
                 thread = new Thread(new ThreadStart(service));

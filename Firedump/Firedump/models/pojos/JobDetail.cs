@@ -33,5 +33,7 @@ namespace Firedump.models.pojos
 
         public int LocationId { get; set; }
 
+        public int Activate { get; set; }
+
     }
 }

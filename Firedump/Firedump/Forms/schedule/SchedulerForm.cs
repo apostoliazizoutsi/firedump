@@ -56,8 +56,7 @@ namespace Firedump.Forms.schedule
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            //change activated value witch is 0 or 1 to true false, true for 0 false for 1
-            
+            //change activated value witch is 0 or 1 to true false, true for 0 false for 1           
             if(e.RowIndex > 0)
             {
                 dataGridView1.Rows[e.RowIndex - 1].Cells[1].Value = "Delete";
@@ -68,9 +67,15 @@ namespace Firedump.Forms.schedule
                     if (num == 0)
                     {
                         chk.Value = true;
+                        chk.Style.BackColor = Color.Green;
                     }
                     else
+                    {
                         chk.Value = false;
+                        chk.Style.BackColor = Color.Red;
+                    }
+                        
+
                 }                  
             }
             
@@ -101,14 +106,9 @@ namespace Firedump.Forms.schedule
             Console.WriteLine(jobDetails.DayOfWeek);
             
             firedumpdbDataSetTableAdapters.schedulesTableAdapter scheduleAdapter = new firedumpdbDataSetTableAdapters.schedulesTableAdapter();
-            scheduleAdapter.Insert((int)jobDetails.Server.id, jobDetails.Name,DateTime.Now,0, jobDetails.Hour, jobDetails.Database,"-",jobDetails.Minute,jobDetails.Second,jobDetails.DayOfWeek);           
+            scheduleAdapter.Insert((int)jobDetails.Server.id, jobDetails.Name,DateTime.Now,jobDetails.Activate, jobDetails.Hour, jobDetails.Database,"-",jobDetails.Minute,jobDetails.Second,jobDetails.DayOfWeek);           
             firedumpdbDataSet.schedulesDataTable scheduleTable = new firedumpdbDataSet.schedulesDataTable();
-            scheduleAdapter.FillOrderByDate(scheduleTable);
-
-            
-            //Console.WriteLine("day:"+scheduleTable[1].day);
-            dataGridView1.DataSource = scheduleTable;
-
+           
             scheduleAdapter.FillIdByName(scheduleTable,jobDetails.Name);
             int scheduleId = (int)scheduleTable[0].id;
             int locId = jobDetails.LocationId;
@@ -120,11 +120,15 @@ namespace Firedump.Forms.schedule
             firedumpdbDataSet.backup_locationsDataTable backuptable = new firedumpdbDataSet.backup_locationsDataTable();
             backuptable = backAdapter.GetDataByID(locId);
             dataGridViewlocs.DataSource = backuptable;
+
+            scheduleAdapter.FillOrderByDate(scheduleTable);
+            dataGridView1.DataSource = scheduleTable;
         }
 
 
         private void reloadserverData(int id)
         {           
+            /*
             serverAdapter.Fill(serverdataTable);
             int i = 0;
             foreach (firedumpdbDataSet.mysql_serversRow row in serverdataTable)
@@ -136,6 +140,7 @@ namespace Firedump.Forms.schedule
                 }
                 i++;
             }
+            */
         }
 
         private void newmysqlserver_click(object sender, EventArgs e)
@@ -212,6 +217,9 @@ namespace Firedump.Forms.schedule
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+                return;
+
             if(e.ColumnIndex == 1)
             {
                 int scheduleId = 0;
@@ -223,7 +231,24 @@ namespace Firedump.Forms.schedule
                         if (result == DialogResult.Yes)
                         {
                             //delete from userinfo, schedule_save_location and logs first
-                            //schedulesTableAdapter.DeleteQueryById(scheduleId);
+                            //userinfo
+                            firedumpdbDataSetTableAdapters.userinfoTableAdapter userAdapter = new firedumpdbDataSetTableAdapters.userinfoTableAdapter();
+                            userAdapter.DeleteQueryByScheduleid(scheduleId);
+                            
+                            //logs
+                            firedumpdbDataSetTableAdapters.logsTableAdapter logAdapter = new firedumpdbDataSetTableAdapters.logsTableAdapter();
+                            logAdapter.DeleteQueryByScheduleid(scheduleId);
+                            
+                            //save_locations
+                            firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter saveLocAdapter = new firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter();
+                            saveLocAdapter.DeleteQueryByScheduleId(scheduleId);
+
+                            //last delete from schedule
+                            schedulesTableAdapter.DeleteQueryById(scheduleId);
+
+                            firedumpdbDataSet.schedulesDataTable scheduleTable = new firedumpdbDataSet.schedulesDataTable();
+                            schedulesTableAdapter.FillOrderByDate(scheduleTable);
+                            dataGridView1.DataSource = scheduleTable;
                         }
                     } 
                 }

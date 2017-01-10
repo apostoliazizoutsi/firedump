@@ -8,13 +8,14 @@ using System.Threading;
 using Topshelf;
 using Firedump.models.dump;
 using Firedump.models.location;
+using Firedump.models.configuration.jsonconfig;
 
 namespace Firedump.service
 {
     public class FiredumpService : ServiceControl
     {       
         //DO NOT CHANGE THIS
-        private static readonly int MILLISECS = 2500;
+        private static readonly int MILLISECS = 3200;
 
         private static Thread serviceThread;
         private static bool run = true;
@@ -59,11 +60,12 @@ namespace Firedump.service
 
             while (run)
             {
+                ConfigurationManager.getInstance().initializeConfig();
                 Thread.Sleep(MILLISECS);
                 try
                 {
                     //SAFE COMMENT ALL
-                    /*
+                    
                     int day = (int)DateTime.Now.DayOfWeek;
                     int hours = DateTime.Now.Hour;
                     int minute = DateTime.Now.Minute;
@@ -71,27 +73,33 @@ namespace Firedump.service
 
                     if(scheduleRowList.Count > 0 && day == scheduleRowList[0].day && hours == scheduleRowList[0].hours && minute == scheduleRowList[0].minutes)
                     {
+                        //File.AppendAllText(@"errorlog.txt", " SAME " + '\n');
                         //inbounds same minute
                         bool overlap = scheduleRowList[0].seconds <= second;
                         if(overlap)
                         {
+                           // File.AppendAllText(@"errorlog.txt", " overlap " + '\n');
                             int dif = second - scheduleRowList[0].seconds;
                             if(dif <= 3)
                             {
+                                //File.AppendAllText(@"errorlog.txt", " INTIME "+'\n');
+                                
                                 schedulemanager = new ScheduleManager();
                                 schedulemanager.setSchedule(scheduleRowList[0]);
+                                firedumpdbDataSet.schedulesRow row = scheduleRowList[0];
+                                scheduleRowList.Remove(row);
                                 schedulemanager.Start();
                                 scheduleQueue.Enqueue(schedulemanager);
-                                firedumpdbDataSet.schedulesRow row = scheduleRowList[0];
-                                scheduleRowList.Remove(row);                    
+                                    
                             }
                         }
                     }
 
+                    //File.AppendAllText(@"errorlog.txt", " NEXTS "+ day+" "+ hours+" "+ minute+'\n');
                     //Refill
                     if (scheduleRowList.Count == 0)
                         setUpScheduleList();
-                        */
+                        
                 }
                 catch (Exception ex) {
                     //write ex message to file

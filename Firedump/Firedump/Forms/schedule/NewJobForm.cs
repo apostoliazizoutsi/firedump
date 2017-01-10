@@ -119,6 +119,10 @@ namespace Firedump.Forms.schedule
                     jobdetails.Server = (firedumpdbDataSet.mysql_serversRow)serverData.Rows[cmbServers.SelectedIndex];
                     jobdetails.LocationId = id;
                     jobdetails.LocationName = locname;
+                    int activate = 0;
+                    if (!cbactivate.Checked)
+                        activate = 1;
+                    jobdetails.Activate = activate;
 
                     OnSetJobDetails(jobdetails);
                     this.Close();

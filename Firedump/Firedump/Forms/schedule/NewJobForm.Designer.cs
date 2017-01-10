@@ -47,6 +47,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.label6 = new System.Windows.Forms.Label();
             this.tbjobname = new System.Windows.Forms.TextBox();
+            this.cbactivate = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericMinute)).BeginInit();
@@ -137,6 +138,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cbactivate);
             this.groupBox2.Controls.Add(this.numericMinute);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.numericHour);
@@ -264,6 +266,18 @@
             this.tbjobname.Size = new System.Drawing.Size(187, 20);
             this.tbjobname.TabIndex = 4;
             // 
+            // cbactivate
+            // 
+            this.cbactivate.AutoSize = true;
+            this.cbactivate.Checked = true;
+            this.cbactivate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbactivate.Location = new System.Drawing.Point(10, 68);
+            this.cbactivate.Name = "cbactivate";
+            this.cbactivate.Size = new System.Drawing.Size(116, 17);
+            this.cbactivate.TabIndex = 6;
+            this.cbactivate.Text = "Activate On Create";
+            this.cbactivate.UseVisualStyleBackColor = true;
+            // 
             // NewJobForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -309,5 +323,6 @@
         private System.Windows.Forms.CheckBox cbchoosealldatabases;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cblocation;
+        private System.Windows.Forms.CheckBox cbactivate;
     }
 }

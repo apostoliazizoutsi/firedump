@@ -2,10 +2,12 @@
 using Firedump.models.dump;
 using Firedump.models.location;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Firedump.models.configuration.jsonconfig;
 
 namespace Firedump.service
 {
@@ -43,10 +45,17 @@ namespace Firedump.service
             firedumpdbDataSet.mysql_serversDataTable servertable = new firedumpdbDataSet.mysql_serversDataTable();
             serveradapter.FillById(servertable, schedulesRow.server_id);
 
+           
             if (servertable?.Count > 0)
+            {
+                //File.AppendAllText(@"servicelog.txt", "COUNT:"+servertable.Count+",");
                 server = servertable[0];
+            }                
             else
+            {
+                //File.AppendAllText(@"servicelog.txt", "COUNT:" + "EMPTY" + ",");
                 return;
+            }
 
             DumpCredentialsConfig dumpConfig = new DumpCredentialsConfig();
             dumpConfig.database = database;
@@ -59,19 +68,54 @@ namespace Firedump.service
 
             mysqldumpAdapter = new MySqlDumpAdapter();
             mysqldumpAdapter.Cancelled += OnCancelled;
-            mysqldumpAdapter.Completed += OnCompleted;         
+            mysqldumpAdapter.Completed += OnCompleted;
+            mysqldumpAdapter.CompressProgress += oncompressprogress;
+            mysqldumpAdapter.CompressStart += oncompstart;
+            mysqldumpAdapter.Error += onerror;
+            mysqldumpAdapter.InitDumpTables += oninitdumptables;
+            mysqldumpAdapter.Progress += onprogress;
+            mysqldumpAdapter.TableRowCount += ontablerowcount;
+            mysqldumpAdapter.TableStartDump += ontablestartdump;
+            
+            //File.AppendAllText(@"servicelog.txt", "STARTDUMP");
             mysqldumpAdapter.startDump(dumpConfig);
             
         }
 
+        private void ontablestartdump(string table)
+        {
+        }
+
+        private void ontablerowcount(int rowcount)
+        {
+        }
+
+        private void onprogress(string progress)
+        {
+        }
+
+        private void oninitdumptables(List<string> tables)
+        {
+        }
+
+        private void onerror(int error)
+        {
+        }
+
+        private void oncompstart()
+        {
+        }
+
+        private void oncompressprogress(int progress)
+        {
+        }
 
         private void OnCompleted(DumpResultSet resultSet)
         {
-            if(resultSet != null)
+            if (resultSet != null)
             {
                 if(resultSet.wasSuccessful)
                 {
-
                     List<int> locations = new List<int>();
                     //get schedule_save_location data table by schedule ID
                     firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter savelocAdapter = new firedumpdbDataSetTableAdapters.schedule_save_locationsTableAdapter();
@@ -80,30 +124,33 @@ namespace Firedump.service
 
                     if(saveloctable.Count > 0)
                     {
+                        //File.AppendAllText(@"servicelog.txt", "saveloctable.Count > 0");
                         //now get backuplocations by backuplocationID
-                        firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backupAdapter = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
-                        firedumpdbDataSet.backup_locationsDataTable backuptable = new firedumpdbDataSet.backup_locationsDataTable();
-                        for (int i = 0; i < saveloctable.Count; i++)
+                        try {
+                            firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backupAdapter = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
+                            firedumpdbDataSet.backup_locationsDataTable backuptable = new firedumpdbDataSet.backup_locationsDataTable();
+                            for (int i = 0; i < saveloctable.Count; i++)
+                            {
+                                firedumpdbDataSet.backup_locationsDataTable temp = backupAdapter.GetDataByID(saveloctable[i].backup_location_id);
+                                locations.Add((int)temp[0].id);
+                                //File.AppendAllText(@"servicelog.txt", "Addbackup_locationsRow " + temp[0].id + temp[0].name);
+                            }
+                            
+                            locationAdapterManager = new LocationAdapterManager(locations, resultSet.fileAbsPath);
+                            locationAdapterManager.SaveInit += onSaveInitHandler;
+                            locationAdapterManager.InnerSaveInit += onInnerSaveInitHandler;
+                            locationAdapterManager.LocationProgress += onLocationProgressHandler;
+                            locationAdapterManager.SaveProgress += setSaveProgressHandler;
+                            locationAdapterManager.SaveComplete += onSaveCompleteHandler;
+                            locationAdapterManager.SaveError += onSaveErrorHandler;
+                            locationAdapterManager.setProgress();
+
+                            //File.AppendAllText(@"servicelog.txt", "locationAdapterManager.startSave");
+                            locationAdapterManager.startSave();
+                        }catch(Exception ex)
                         {
-                            firedumpdbDataSet.backup_locationsDataTable  temp = backupAdapter.GetDataByID(saveloctable[i].backup_location_id);
-                            backuptable.Addbackup_locationsRow(temp[0]);
+                            //File.AppendAllText(@"servicelog.txt", "Exception "+ex.ToString());
                         }
-
-                        foreach(firedumpdbDataSet.backup_locationsRow backrow in backuptable)
-                        {
-                            locations.Add((int)backrow.id);
-                        }
-
-                        locationAdapterManager = new LocationAdapterManager(locations,resultSet.fileAbsPath);
-                        locationAdapterManager.SaveInit += onSaveInitHandler;
-                        locationAdapterManager.InnerSaveInit += onInnerSaveInitHandler;
-                        locationAdapterManager.LocationProgress += onLocationProgressHandler;
-                        locationAdapterManager.SaveProgress += setSaveProgressHandler;
-                        locationAdapterManager.SaveComplete += onSaveCompleteHandler;
-                        locationAdapterManager.SaveError += onSaveErrorHandler;
-                        locationAdapterManager.setProgress();
-
-                        locationAdapterManager.startSave();
                     }
                     
                 }
@@ -120,7 +167,7 @@ namespace Firedump.service
 
         private void onSaveCompleteHandler(List<LocationResultSet> results)
         {
-            
+            File.AppendAllText(@"servicelog.txt", "onSaveCompleteHandler");
         }
 
         private void setSaveProgressHandler(int progress, int speed)
@@ -140,7 +187,7 @@ namespace Firedump.service
 
         private void onSaveInitHandler(int maxprogress)
         {
-            
+            File.AppendAllText(@"servicelog.txt", "onSaveInitHandler");
         }
 
         private void OnCancelled()

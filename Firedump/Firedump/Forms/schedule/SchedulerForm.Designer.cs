@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.serviceManager1 = new Firedump.usercontrols.ServiceManager();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dataGridViewlocs = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.bnewjob = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -43,14 +43,14 @@
             this.schedulesTableAdapter = new Firedump.firedumpdbDataSetTableAdapters.schedulesTableAdapter();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.emailScheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataGridViewlocs = new System.Windows.Forms.DataGridView();
+            this.serviceManager1 = new Firedump.usercontrols.ServiceManager();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewlocs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.schedulesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewlocs)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -64,13 +64,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Service Manager";
             // 
-            // serviceManager1
-            // 
-            this.serviceManager1.Location = new System.Drawing.Point(6, 19);
-            this.serviceManager1.Name = "serviceManager1";
-            this.serviceManager1.Size = new System.Drawing.Size(356, 197);
-            this.serviceManager1.TabIndex = 0;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dataGridViewlocs);
@@ -83,6 +76,14 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Schedules-Jobs";
+            // 
+            // dataGridViewlocs
+            // 
+            this.dataGridViewlocs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewlocs.Location = new System.Drawing.Point(6, 395);
+            this.dataGridViewlocs.Name = "dataGridViewlocs";
+            this.dataGridViewlocs.Size = new System.Drawing.Size(449, 109);
+            this.dataGridViewlocs.TabIndex = 8;
             // 
             // button1
             // 
@@ -106,11 +107,13 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.activated,
             this.delete});
             this.dataGridView1.Location = new System.Drawing.Point(6, 52);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(449, 337);
             this.dataGridView1.TabIndex = 3;
@@ -170,13 +173,12 @@
             this.emailScheduleToolStripMenuItem.Text = "Email Schedule";
             this.emailScheduleToolStripMenuItem.Click += new System.EventHandler(this.emailScheduleToolStripMenuItem_Click);
             // 
-            // dataGridViewlocs
+            // serviceManager1
             // 
-            this.dataGridViewlocs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewlocs.Location = new System.Drawing.Point(6, 395);
-            this.dataGridViewlocs.Name = "dataGridViewlocs";
-            this.dataGridViewlocs.Size = new System.Drawing.Size(449, 109);
-            this.dataGridViewlocs.TabIndex = 8;
+            this.serviceManager1.Location = new System.Drawing.Point(6, 19);
+            this.serviceManager1.Name = "serviceManager1";
+            this.serviceManager1.Size = new System.Drawing.Size(356, 197);
+            this.serviceManager1.TabIndex = 0;
             // 
             // SchedulerForm
             // 
@@ -193,12 +195,12 @@
             this.Load += new System.EventHandler(this.SchedulerForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewlocs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.schedulesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewlocs)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
