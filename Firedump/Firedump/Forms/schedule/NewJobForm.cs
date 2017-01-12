@@ -19,7 +19,6 @@ namespace Firedump.Forms.schedule
         private List<string> tables;
         private firedumpdbDataSet.backup_locationsDataTable loctable;
 
-        private bool IsInit { get; set; }
         private void OnSetJobDetails(JobDetail jobDetail)
         {
             setJobDetails?.Invoke(jobDetail);
@@ -32,7 +31,6 @@ namespace Firedump.Forms.schedule
         {
             InitializeComponent();
             backgroundWorker1.DoWork += fillDatabaseCmb;
-            IsInit = true;
             loadComboBoxServers();
             loadlocationsCombobox();      
         }
@@ -62,7 +60,8 @@ namespace Firedump.Forms.schedule
             if (cmbServers.Items.Count > 0)
             {
                 cmbServers.SelectedIndex = 0;
-                backgroundWorker1.RunWorkerAsync();
+                //backgroundWorker1.RunWorkerAsync();
+                fillDatabaseCmb(null,null);
             }
         }
 
@@ -170,23 +169,11 @@ namespace Firedump.Forms.schedule
             if (cmbServers.Items.Count == 0) { return; } //ama den iparxei kanenas server den to kanei           
             DbConnection con = new DbConnection();
 
-            if(!IsInit)
-            {
-                this.Invoke((MethodInvoker)delegate ()
-                {
-                    con.Host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
-                    con.port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
-                    con.username = (string)serverData.Rows[cmbServers.SelectedIndex]["username"];
-                    con.password = (string)serverData.Rows[cmbServers.SelectedIndex]["password"];
-                });
-            } else
-            {
-                con.Host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
-                con.port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
-                con.username = (string)serverData.Rows[cmbServers.SelectedIndex]["username"];
-                con.password = (string)serverData.Rows[cmbServers.SelectedIndex]["password"];
-            }
-            
+            con.Host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
+            con.port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
+            con.username = (string)serverData.Rows[cmbServers.SelectedIndex]["username"];
+            con.password = (string)serverData.Rows[cmbServers.SelectedIndex]["password"];
+
             Console.WriteLine("cmbServers.Items.Count" + cmbServers.Items.Count);
             //edw prepei na bei to database kai mia if then else apo katw analoga ama kanei connect se server i se database
             try {
@@ -200,79 +187,43 @@ namespace Firedump.Forms.schedule
                     databases.Remove("performance_schema");
                     databases.Remove("sys");
 
-                    if (!IsInit)
-                    {
-                        this.Invoke((MethodInvoker)delegate ()
-                        {
-                            cmbdatabase.Items.Clear();
-                        });
-                    } else
-                    {
-                        cmbdatabase.Items.Clear();
-                    }
+                    cmbdatabase.Items.Clear();
 
                     foreach (string database in databases)
                     {
-                        if (!IsInit)
-                        {
-                            this.Invoke((MethodInvoker)delegate ()
-                            {
-                                TreeNode node = new TreeNode(database);
-                                node.ImageIndex = 0;
-                                cmbdatabase.Items.Add(database);
-                                Console.WriteLine(database);
-                            });
-                        } else
-                        {
-                            TreeNode node = new TreeNode(database);
-                            node.ImageIndex = 0;
-                            cmbdatabase.Items.Add(database);
-                            Console.WriteLine(database);
-                        }
+                        TreeNode node = new TreeNode(database);
+                        node.ImageIndex = 0;
+                        cmbdatabase.Items.Add(database);
+                        Console.WriteLine(database);
                     }
 
-                    if (!IsInit)
-                    {
-                        this.Invoke((MethodInvoker)delegate ()
-                        {
-                            if (cmbdatabase.Items.Count > 0)
-                                cmbdatabase.SelectedIndex = 0;
-                        });
-                    } else
-                    {
-                        if (cmbdatabase.Items.Count > 0)
-                            cmbdatabase.SelectedIndex = 0;
-                    }
+                    if (cmbdatabase.Items.Count > 0)
+                        cmbdatabase.SelectedIndex = 0;
 
                 }
                 else
                 {
-                    if (!IsInit)
-                    {
-                        this.Invoke((MethodInvoker)delegate ()
-                        {
-                            MessageBox.Show("Connection failed: \n" + result.errorMessage, "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        });
-                    } else
-                    {
-                        MessageBox.Show("Connection failed: \n" + result.errorMessage, "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show("Connection failed: \n" + result.errorMessage, "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
-            IsInit = false;
         }
 
         private void cmbServers_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            fillDatabaseCmb(null, null);
+
+            /*
             if (!backgroundWorker1.IsBusy)
             {
                 if(cmbServers.Items.Count > 0)
                     backgroundWorker1.RunWorkerAsync();
             }
+            */
 
         }
     }
