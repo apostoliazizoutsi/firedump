@@ -2,8 +2,7 @@
 #### On Development
 <img src="https://raw.githubusercontent.com/avraampiperidis/firedump/master/Firedump/Firedump/resources/firedump.png" width="450"/>
 <br>
-#### 
-========
+
 firedump Page <br>https://avraampiperidis.github.io/firedump/ <br>
 Build/Test reports(Jenkins) <br>http://35.156.193.61/result/<br>
 <br>
