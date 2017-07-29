@@ -109,7 +109,6 @@ namespace Firedump.Forms.mysql.status
                 }
             }catch(Exception ex)
             {
-                MessageBox.Show(ex.ToString());
             }
            
         }
@@ -161,7 +160,6 @@ namespace Firedump.Forms.mysql.status
                     }
                 }catch(Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
                 }
             }
 
@@ -202,7 +200,6 @@ namespace Firedump.Forms.mysql.status
                     }
                 }catch(Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
                 }            
             }
 
@@ -248,7 +245,6 @@ namespace Firedump.Forms.mysql.status
                     }
                 }catch(Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
                 }
 
             }

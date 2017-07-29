@@ -87,6 +87,7 @@ namespace Firedump.Forms.mysql.sqlviewer
 
                     treeView1.ImageIndex = 0;
                     treeView1.ImageList = imagelist;
+                    
                 }
                 else
                 {
@@ -222,6 +223,20 @@ namespace Firedump.Forms.mysql.sqlviewer
                                 DataSet dataset = new DataSet();
                                 BindingSource bs = new BindingSource();
                                 adapter.Fill(dataset);
+
+                                //if its byte[] == blob is db
+                                //then set it to null
+                                for(int i =0; i < dataset.Tables[0].Rows.Count; i++)
+                                {
+                                    for (int x =0; x < dataset.Tables[0].Rows[i].Table.Columns.Count; x++)
+                                    {
+                                        if (dataset.Tables[0].Rows[i].Table.Columns[x].DataType.ToString() == "System.Byte[]")
+                                        {
+                                            dataset.Tables[0].Rows[i][x] = null;
+                                        }
+                                    }
+                                }
+
                                 bs.DataSource = dataset.Tables[0].DefaultView;
                                 dataGridView1.DataSource = bs;
 
@@ -230,18 +245,9 @@ namespace Firedump.Forms.mysql.sqlviewer
                             }
                             catch (MySqlException ex)
                             {
+                                
                                 Console.WriteLine(ex.Message);
-                                DataSet dataset = new DataSet();
-                                DataTable datatable = new DataTable("MySql Error");
-                                datatable.Columns.Add(new DataColumn("Type", typeof(string)));
-                                datatable.Columns.Add(new DataColumn("Message", typeof(string)));
-                                DataRow datarow = datatable.NewRow();
-                                datarow["Type"] = "MySql Error";
-                                datarow["Message"] = ex.Message;
-                                datatable.Rows.Add(datarow);
-                                dataset.Tables.Add(datatable);
-
-                                dataGridView1.DataSource = dataset.Tables[0];
+                               
                             }
 
                         }
@@ -249,17 +255,7 @@ namespace Firedump.Forms.mysql.sqlviewer
                 }catch(Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    DataSet dataset = new DataSet();
-                    DataTable datatable = new DataTable("MySql Error");
-                    datatable.Columns.Add(new DataColumn("Type", typeof(string)));
-                    datatable.Columns.Add(new DataColumn("Message", typeof(string)));
-                    DataRow datarow = datatable.NewRow();
-                    datarow["Type"] = "MySql Error";
-                    datarow["Message"] = ex.Message;
-                    datatable.Rows.Add(datarow);
-                    dataset.Tables.Add(datatable);
-
-                    dataGridView1.DataSource = dataset.Tables[0];
+                   
                 }
             }
         }
@@ -568,5 +564,6 @@ namespace Firedump.Forms.mysql.sqlviewer
             }
         }
 
+       
     }
 }
